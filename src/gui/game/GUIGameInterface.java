@@ -42,61 +42,61 @@ import logic.player.GUIHumanPlayer;
 
 public class GUIGameInterface implements GameInterface {
 
-    private BoardPanel _boardPanel;
-    private StatusBarPanel _statusBarPanel;
-    private MenuBar _menuBar;
+  private BoardPanel _boardPanel;
+  private StatusBarPanel _statusBarPanel;
+  private MenuBar _menuBar;
 
-    private Controller _controller;
-    private Window _window;
-    private GUIHumanPlayer _player = null;
+  private Controller _controller;
+  private Window _window;
+  private GUIHumanPlayer _player = null;
 
-    private GameType _gameType;
-    private int _width;
-    private int _height;
+  private GameType _gameType;
+  private int _width;
+  private int _height;
 
-    public GUIGameInterface(GUIHumanPlayer player, GameType gameType,
-	    int width, int height) {
-	setPlayer(player);
-	_gameType = gameType;
-	_width = width;
-	_height = height;
-    }
+  public GUIGameInterface(GUIHumanPlayer player, GameType gameType, int width,
+      int height) {
+    setPlayer(player);
+    _gameType = gameType;
+    _width = width;
+    _height = height;
+  }
 
-    public void setGame(Game game) throws IOException {
-	_controller = new Controller(game, _gameType);
+  public void setGame(Game game) throws IOException {
+    _controller = new Controller(game, _gameType);
 
-	createViews();
-	registerGameObservers(game);
-	createWindow();
-    }
+    createViews();
+    registerGameObservers(game);
+    createWindow();
+  }
 
-    public AskPlayAgain getAskPlayAgain() {
-	return new GUIPlayAgain();
-    }
+  public AskPlayAgain getAskPlayAgain() {
+    return new GUIPlayAgain();
+  }
 
-    private void createViews() throws IOException {
-	_boardPanel = new BoardPanel(_player, _width, _height);
-	_menuBar = new MenuBar(_controller);
-	_statusBarPanel = new StatusBarPanel();
-    }
+  private void createViews() throws IOException {
+    _boardPanel = new BoardPanel(_player, _width, _height);
+    _menuBar = new MenuBar(_controller);
+    _statusBarPanel = new StatusBarPanel();
+  }
 
-    private void createWindow() {
-	_window = new Window(_gameType);
-	_window.init(_boardPanel, _statusBarPanel, _menuBar);
-	_menuBar.setWindow(_window);
-    }
+  private void createWindow() {
+    _window = new Window(_gameType);
+    _window.init(_boardPanel, _statusBarPanel, _menuBar);
+    _menuBar.setWindow(_window);
+  }
 
-    private void registerGameObservers(Game game) {
-	game.addObserver(_menuBar);
-	game.addObserver(_boardPanel);
-	game.addObserver(_statusBarPanel);
-    }
+  private void registerGameObservers(Game game) {
+    game.addObserver(_menuBar);
+    game.addObserver(_boardPanel);
+    game.addObserver(_statusBarPanel);
+  }
 
-    public void setPlayer(GUIHumanPlayer player) {
-	_player = player;
-    }
+  public void setPlayer(GUIHumanPlayer player) {
+    _player = player;
+  }
 
-    public void terminateGame() {
-	_window.closeWindow();
-    }
+  public void terminateGame() {
+    _window.closeWindow();
+  }
 }

@@ -31,39 +31,39 @@ import logic.Token;
 
 public class TokenTest extends TestCase {
 
-    public void testToString() {
+  public void testToString() {
 
-	Token f = Token.YELLOW;
-	assertEquals("Fail with token YELLOW", f.toString(), "Yellow");
+    Token f = Token.YELLOW;
+    assertEquals("Fail with token YELLOW", f.toString(), "Yellow");
 
-	f = Token.RED;
-	assertEquals("Fail with token RED", f.toString(), "Red");
+    f = Token.RED;
+    assertEquals("Fail with token RED", f.toString(), "Red");
 
-	f = Token.NONE;
-	assertEquals("Fail with token NONE", f.toString(), "");
-    }
+    f = Token.NONE;
+    assertEquals("Fail with token NONE", f.toString(), "");
+  }
 
-    public void testToChar() {
+  public void testToChar() {
 
-	Token f = Token.YELLOW;
-	assertEquals("Fail with token YELLOW", f.toChar(), 'Y');
+    Token f = Token.YELLOW;
+    assertEquals("Fail with token YELLOW", f.toChar(), 'Y');
 
-	f = Token.RED;
-	assertEquals("Fail with token RED", f.toChar(), 'R');
+    f = Token.RED;
+    assertEquals("Fail with token RED", f.toChar(), 'R');
 
-	f = Token.NONE;
-	assertEquals("Fail with token NONE", f.toChar(), ' ');
-    }
+    f = Token.NONE;
+    assertEquals("Fail with token NONE", f.toChar(), ' ');
+  }
 
-    public void testGetOpposite() {
+  public void testGetOpposite() {
 
-	Token f = Token.YELLOW;
-	assertEquals("Fail with token YELLOW", f.getOpposite(), Token.RED);
+    Token f = Token.YELLOW;
+    assertEquals("Fail with token YELLOW", f.getOpposite(), Token.RED);
 
-	f = Token.RED;
-	assertEquals("Fail with token RED", f.getOpposite(), Token.YELLOW);
+    f = Token.RED;
+    assertEquals("Fail with token RED", f.getOpposite(), Token.YELLOW);
 
-	f = Token.NONE;
-	assertEquals("Fail with token NONE", f.getOpposite(), Token.NONE);
-    }
+    f = Token.NONE;
+    assertEquals("Fail with token NONE", f.getOpposite(), Token.NONE);
+  }
 }

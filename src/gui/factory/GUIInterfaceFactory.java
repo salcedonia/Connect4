@@ -34,22 +34,22 @@ import logic.player.Player;
 
 public class GUIInterfaceFactory implements InterfaceFactory {
 
-    private GUIHumanPlayer _player = null;
-    private GUIGameInterface _gameInterface = null;
+  private GUIHumanPlayer _player = null;
+  private GUIGameInterface _gameInterface = null;
 
-    public Player createHumanPlayer(boolean rowSensitive) {
-	if (_player == null) {
-	    _player = new GUIHumanPlayer();
-	}
-	if (_gameInterface != null) {
-	    _gameInterface.setPlayer(_player);
-	}
-	return _player;
+  public Player createHumanPlayer(boolean rowSensitive) {
+    if (_player == null) {
+      _player = new GUIHumanPlayer();
     }
+    if (_gameInterface != null) {
+      _gameInterface.setPlayer(_player);
+    }
+    return _player;
+  }
 
-    public GameInterface createGameInterface(GameType gameType, int width,
-	    int height) {
-	_gameInterface = new GUIGameInterface(_player, gameType, width, height);
-	return _gameInterface;
-    }
+  public GameInterface createGameInterface(GameType gameType, int width,
+      int height) {
+    _gameInterface = new GUIGameInterface(_player, gameType, width, height);
+    return _gameInterface;
+  }
 }

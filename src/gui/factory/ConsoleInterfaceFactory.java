@@ -37,18 +37,18 @@ import logic.player.Player;
 
 public class ConsoleInterfaceFactory implements InterfaceFactory {
 
-    private Scanner _scanner;
+  private Scanner _scanner;
 
-    public ConsoleInterfaceFactory() {
-	_scanner = new Scanner(System.in);
-    }
+  public ConsoleInterfaceFactory() {
+    _scanner = new Scanner(System.in);
+  }
 
-    public Player createHumanPlayer(boolean rowSensitive) {
-	return new ConsoleHumanPlayer(_scanner, rowSensitive);
-    }
+  public Player createHumanPlayer(boolean rowSensitive) {
+    return new ConsoleHumanPlayer(_scanner, rowSensitive);
+  }
 
-    public GameInterface createGameInterface(GameType gameType, int width,
-	    int height) {
-	return new ConsoleGameInterface(_scanner, width, height);
-    }
+  public GameInterface createGameInterface(GameType gameType, int width,
+      int height) {
+    return new ConsoleGameInterface(_scanner, width, height);
+  }
 }

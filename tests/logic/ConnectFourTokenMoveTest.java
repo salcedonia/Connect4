@@ -34,26 +34,25 @@ import logic.strategy.ConnectFourTokenMove;
 
 public class ConnectFourTokenMoveTest extends TestCase {
 
-    public void testPutToken() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
+  public void testPutToken() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
 
-	try {
+    try {
 
-	    board.putToken(Token.YELLOW, 6, 0);
-	    assertEquals("Fails when putting the first token",
-		    board.getSlot(6, board.getHeight() - 1), Token.YELLOW);
+      board.putToken(Token.YELLOW, 6, 0);
+      assertEquals("Fails when putting the first token",
+          board.getSlot(6, board.getHeight() - 1), Token.YELLOW);
 
-	    board.putToken(Token.RED, 6, 0);
-	    assertEquals("Fails when putting the second token",
-		    board.getSlot(6, board.getHeight() - 2), Token.RED);
+      board.putToken(Token.RED, 6, 0);
+      assertEquals("Fails when putting the second token",
+          board.getSlot(6, board.getHeight() - 2), Token.RED);
 
-	    assertTrue("Fails tokens", board.getTokens() == 2);
-	    assertTrue("Fails tokens in column",
-		    board.getTokensInColumn(6) == 2);
+      assertTrue("Fails tokens", board.getTokens() == 2);
+      assertTrue("Fails tokens in column", board.getTokensInColumn(6) == 2);
 
-	} catch (InvalidMove e) {
+    } catch (InvalidMove e) {
 
-	    fail("Fails upon invalid move");
-	}
+      fail("Fails upon invalid move");
     }
+  }
 }

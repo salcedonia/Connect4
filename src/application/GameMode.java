@@ -27,5 +27,5 @@
 package application;
 
 public enum GameMode {
-    CONSOLE, GUI
+  CONSOLE, GUI
 }

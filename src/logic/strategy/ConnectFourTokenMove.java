@@ -33,22 +33,20 @@ import logic.Token;
 
 public class ConnectFourTokenMove implements TokenMoveStrategy {
 
-    public Position putToken(Board board, Token token, int column, int row)
-	    throws InvalidMove {
-	if (token != Token.NONE && board.isValidColumn(column)
-		&& !board.isColumnFull(column)) {
+  public Position putToken(Board board, Token token, int column, int row)
+      throws InvalidMove {
+    if (token != Token.NONE && board.isValidColumn(column)
+        && !board.isColumnFull(column)) {
 
-	    board.setCell(
-		    column,
-		    (board.getHeight() - 1) - (board.getTokensInColumn(column)),
-		    token);
-	    board.setTokensInColumn(column, board.getTokensInColumn(column) + 1);
-	    board.setTokens(board.getTokens() + 1);
+      board.setCell(column,
+          (board.getHeight() - 1) - (board.getTokensInColumn(column)), token);
+      board.setTokensInColumn(column, board.getTokensInColumn(column) + 1);
+      board.setTokens(board.getTokens() + 1);
 
-	    return new Position(column, (board.getHeight() - 1)
-		    - (board.getTokensInColumn(column) - 1));
-	} else {
-	    throw new InvalidMove();
-	}
+      return new Position(column, (board.getHeight() - 1)
+          - (board.getTokensInColumn(column) - 1));
+    } else {
+      throw new InvalidMove();
     }
+  }
 }

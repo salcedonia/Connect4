@@ -31,5 +31,5 @@ import logic.Token;
 
 public abstract class ComputerPlayer implements Player {
 
-    public abstract Position getMove(Token[][] tokens);
+  public abstract Position getMove(Token[][] tokens);
 }

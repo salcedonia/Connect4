@@ -32,38 +32,38 @@ import logic.AskPlayAgain;
 
 public class ConsolePlayAgain implements AskPlayAgain {
 
-    private Scanner _scanner;
+  private Scanner _scanner;
 
-    public ConsolePlayAgain(Scanner scanner) {
-	_scanner = scanner;
-    }
+  public ConsolePlayAgain(Scanner scanner) {
+    _scanner = scanner;
+  }
 
-    public boolean playAgain() {
-	String userOption;
-	boolean playAgain = false;
+  public boolean playAgain() {
+    String userOption;
+    boolean playAgain = false;
 
-	do {
+    do {
 
-	    System.out.println();
-	    System.out.print("    Do you want to play again? (y/n): ");
-	    userOption = _scanner.nextLine();
+      System.out.println();
+      System.out.print("    Do you want to play again? (y/n): ");
+      userOption = _scanner.nextLine();
 
-	    // Allows upper and lower case
-	    userOption = userOption.toLowerCase();
+      // Allows upper and lower case
+      userOption = userOption.toLowerCase();
 
-	    if (userOption.matches("s")) {
-		playAgain = true;
-		System.out.println();
-	    } else {
-		if (userOption.matches("n")) {
-		    playAgain = false;
-		} else {
-		    System.err.println("    -> Invalid option. ");
-		}
-	    }
+      if (userOption.matches("s")) {
+        playAgain = true;
+        System.out.println();
+      } else {
+        if (userOption.matches("n")) {
+          playAgain = false;
+        } else {
+          System.err.println("    -> Invalid option. ");
+        }
+      }
 
-	} while (!userOption.matches("y") && !userOption.matches("n"));
+    } while (!userOption.matches("y") && !userOption.matches("n"));
 
-	return playAgain;
-    }
+    return playAgain;
+  }
 }

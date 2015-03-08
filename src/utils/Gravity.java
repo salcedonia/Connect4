@@ -27,39 +27,33 @@
 package utils;
 
 public class Gravity {
-	
-	private int _verticalGravity;
-	private int _horizontalGravity;
-	
-	public Gravity()
-	{	
-		_verticalGravity = 0;
-		_horizontalGravity = 0;
-	}
-	
-	public Gravity(int h, int v)
-	{	
-		_horizontalGravity = h;
-		_verticalGravity = v;
-	}
-	
-	public void setHorizontalGravity(int h)
-	{	
-		_horizontalGravity = h;
-	}
-	
-	public void setVerticalGravity(int v)
-	{	
-		_verticalGravity = v;
-	}
-	
-	public int getHorizontalGravity()
-	{	
-		return _horizontalGravity;
-	}
-	
-	public int getVerticalGravity()
-	{	
-		return _verticalGravity;
-	}
+
+  private int _verticalGravity;
+  private int _horizontalGravity;
+
+  public Gravity() {
+    _verticalGravity = 0;
+    _horizontalGravity = 0;
+  }
+
+  public Gravity(int h, int v) {
+    _horizontalGravity = h;
+    _verticalGravity = v;
+  }
+
+  public void setHorizontalGravity(int h) {
+    _horizontalGravity = h;
+  }
+
+  public void setVerticalGravity(int v) {
+    _verticalGravity = v;
+  }
+
+  public int getHorizontalGravity() {
+    return _horizontalGravity;
+  }
+
+  public int getVerticalGravity() {
+    return _verticalGravity;
+  }
 }

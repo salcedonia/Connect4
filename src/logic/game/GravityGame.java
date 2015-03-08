@@ -31,36 +31,36 @@ import logic.strategy.GravityTokenMove;
 
 public class GravityGame extends Game {
 
-    private int _columns;
-    private int _rows;
+  private int _columns;
+  private int _rows;
 
-    public GravityGame(int columns, int rows) {
-	super();
-	_columns = columns;
-	_rows = rows;
-    }
+  public GravityGame(int columns, int rows) {
+    super();
+    _columns = columns;
+    _rows = rows;
+  }
 
-    public Board createBoard() {
-	return new Board(_columns, _rows, new GravityTokenMove());
-    }
+  public Board createBoard() {
+    return new Board(_columns, _rows, new GravityTokenMove());
+  }
 
-    public boolean isGameOver() {
-	return (_board.isBoardFull() || _board.fourTokensConnected(_turn));
-    }
+  public boolean isGameOver() {
+    return (_board.isBoardFull() || _board.fourTokensConnected(_turn));
+  }
 
-    public int getColumns() {
-	return _columns;
-    }
+  public int getColumns() {
+    return _columns;
+  }
 
-    public void setColumns(int columns) {
-	_columns = columns;
-    }
+  public void setColumns(int columns) {
+    _columns = columns;
+  }
 
-    public int getRows() {
-	return _rows;
-    }
+  public int getRows() {
+    return _rows;
+  }
 
-    public void setRows(int rows) {
-	_rows = rows;
-    }
+  public void setRows(int rows) {
+    _rows = rows;
+  }
 }

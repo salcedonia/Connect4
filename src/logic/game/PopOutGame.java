@@ -31,29 +31,29 @@ import logic.strategy.PopOutTokenMove;
 
 public class PopOutGame extends Game {
 
-    private static final int WIDTH = 4;
-    private static final int HEIGHT = 7;
+  private static final int WIDTH = 4;
+  private static final int HEIGHT = 7;
 
-    public PopOutGame() {
-	super();
-    }
+  public PopOutGame() {
+    super();
+  }
 
-    public Board createBoard() {
-	return new Board(WIDTH, HEIGHT, new PopOutTokenMove());
-    }
+  public Board createBoard() {
+    return new Board(WIDTH, HEIGHT, new PopOutTokenMove());
+  }
 
-    public boolean isGameOver() {
-	return (_board.fourTokensConnected(_turn) && !_board
-		.fourTokensConnected(_turn.getOpposite()))
-		|| (_board.fourTokensConnected(_turn.getOpposite()) && !_board
-			.fourTokensConnected(_turn));
-    }
+  public boolean isGameOver() {
+    return (_board.fourTokensConnected(_turn) && !_board
+        .fourTokensConnected(_turn.getOpposite()))
+        || (_board.fourTokensConnected(_turn.getOpposite()) && !_board
+            .fourTokensConnected(_turn));
+  }
 
-    public int getRows() {
-	return HEIGHT;
-    }
+  public int getRows() {
+    return HEIGHT;
+  }
 
-    public int getColumns() {
-	return WIDTH;
-    }
+  public int getColumns() {
+    return WIDTH;
+  }
 }

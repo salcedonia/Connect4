@@ -35,15 +35,15 @@ import logic.player.Player;
 
 public class ConnectFourFactory implements LogicFactory {
 
-    public Game createGame(int columns, int rows) {
-	return new ConnectFourGame();
-    }
+  public Game createGame(int columns, int rows) {
+    return new ConnectFourGame();
+  }
 
-    public Player createHumanPlayer(InterfaceFactory interfaceFactory) {
-	return interfaceFactory.createHumanPlayer(false);
-    }
+  public Player createHumanPlayer(InterfaceFactory interfaceFactory) {
+    return interfaceFactory.createHumanPlayer(false);
+  }
 
-    public Player createComputerPlayer(Token color) {
-	return new ConnectFourComputerPlayer();
-    }
+  public Player createComputerPlayer(Token color) {
+    return new ConnectFourComputerPlayer();
+  }
 }

@@ -31,26 +31,26 @@ import logic.strategy.ConnectFourTokenMove;
 
 public class ConnectFourGame extends Game {
 
-    private static final int WIDTH = 7;
-    private static final int HEIGHT = 6;
+  private static final int WIDTH = 7;
+  private static final int HEIGHT = 6;
 
-    public ConnectFourGame() {
-	super();
-    }
+  public ConnectFourGame() {
+    super();
+  }
 
-    public Board createBoard() {
-	return new Board(WIDTH, HEIGHT, new ConnectFourTokenMove());
-    }
+  public Board createBoard() {
+    return new Board(WIDTH, HEIGHT, new ConnectFourTokenMove());
+  }
 
-    public boolean isGameOver() {
-	return (_board.isBoardFull() || _board.fourTokensConnected(_turn));
-    }
+  public boolean isGameOver() {
+    return (_board.isBoardFull() || _board.fourTokensConnected(_turn));
+  }
 
-    public int getRows() {
-	return HEIGHT;
-    }
+  public int getRows() {
+    return HEIGHT;
+  }
 
-    public int getColumns() {
-	return WIDTH;
-    }
+  public int getColumns() {
+    return WIDTH;
+  }
 }

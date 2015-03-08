@@ -31,18 +31,18 @@ import logic.Token;
 
 public class GUIHumanPlayer implements Player {
 
-    private Position _lastMove;
+  private Position _lastMove;
 
-    public synchronized Position getMove(Token[][] board) {
-	try {
-	    wait();
-	} catch (InterruptedException e) {
-	}
-	return _lastMove;
+  public synchronized Position getMove(Token[][] board) {
+    try {
+      wait();
+    } catch (InterruptedException e) {
     }
+    return _lastMove;
+  }
 
-    public synchronized void asynchronousMove(Position position) {
-	_lastMove = new Position(position.getX(), position.getY());
-	notifyAll();
-    }
+  public synchronized void asynchronousMove(Position position) {
+    _lastMove = new Position(position.getX(), position.getY());
+    notifyAll();
+  }
 }

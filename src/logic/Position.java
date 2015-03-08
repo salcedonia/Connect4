@@ -28,58 +28,58 @@ package logic;
 
 public class Position {
 
-    private int _X;
-    private int _Y;
+  private int _X;
+  private int _Y;
 
-    public Position() {
-	_X = 0;
-	_Y = 0;
+  public Position() {
+    _X = 0;
+    _Y = 0;
+  }
+
+  public Position(int x, int y) {
+    _X = x;
+    _Y = y;
+  }
+
+  public int getX() {
+    return _X;
+  }
+
+  public int getY() {
+    return _Y;
+  }
+
+  public void setX(int x) {
+    _X = x;
+  }
+
+  public void setY(int y) {
+    _Y = y;
+  }
+
+  public boolean equals(Object o) {
+    if (o == null) {
+      return false;
+    }
+    if (o == this) {
+      return true;
+    }
+    if (!(o instanceof Position)) {
+      return false;
+    }
+    Position p = (Position) o;
+    return (p._X == _X && p._Y == _Y);
+  }
+
+  public Object clone() {
+    Object ret = null;
+
+    try {
+      ret = super.clone();
+    } catch (CloneNotSupportedException ex) {
+
     }
 
-    public Position(int x, int y) {
-	_X = x;
-	_Y = y;
-    }
-
-    public int getX() {
-	return _X;
-    }
-
-    public int getY() {
-	return _Y;
-    }
-
-    public void setX(int x) {
-	_X = x;
-    }
-
-    public void setY(int y) {
-	_Y = y;
-    }
-
-    public boolean equals(Object o) {
-	if (o == null) {
-	    return false;
-	}
-	if (o == this) {
-	    return true;
-	}
-	if (!(o instanceof Position)) {
-	    return false;
-	}
-	Position p = (Position) o;
-	return (p._X == _X && p._Y == _Y);
-    }
-
-    public Object clone() {
-	Object ret = null;
-
-	try {
-	    ret = super.clone();
-	} catch (CloneNotSupportedException ex) {
-
-	}
-
-	return ret;
-    }
+    return ret;
+  }
 }

@@ -32,34 +32,34 @@ import gui.swing.Instructions;
 
 public class Controller {
 
-    private Game _model;
+  private Game _model;
 
-    private GameType _gameType;
+  private GameType _gameType;
 
-    public Controller(Game game, GameType gameType) {
-	setModel(game);
-	_gameType = gameType;
-    }
+  public Controller(Game game, GameType gameType) {
+    setModel(game);
+    _gameType = gameType;
+  }
 
-    public void terminateGameRequest() {
-	_model.requestTerminate();
-    }
+  public void terminateGameRequest() {
+    _model.requestTerminate();
+  }
 
-    public void instructionsRequest() {
-	Instructions instructions = new Instructions(_gameType);
-	instructions.show();
-    }
-    
-    public void aboutUsRequest() {
-	AboutUs aboutUs = new AboutUs();
-	aboutUs.show();
-    }
-    
-    public Game getModel() {
-	return _model;
-    }
+  public void instructionsRequest() {
+    Instructions instructions = new Instructions(_gameType);
+    instructions.show();
+  }
 
-    public void setModel(Game game) {
-	_model = game;
-    }
+  public void aboutUsRequest() {
+    AboutUs aboutUs = new AboutUs();
+    aboutUs.show();
+  }
+
+  public Game getModel() {
+    return _model;
+  }
+
+  public void setModel(Game game) {
+    _model = game;
+  }
 }

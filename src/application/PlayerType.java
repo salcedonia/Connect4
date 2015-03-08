@@ -27,5 +27,5 @@
 package application;
 
 public enum PlayerType {
-    HUMAN, COMPUTER
+  HUMAN, COMPUTER
 }

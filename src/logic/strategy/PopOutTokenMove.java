@@ -33,32 +33,29 @@ import logic.Token;
 
 public class PopOutTokenMove implements TokenMoveStrategy {
 
-    public Position putToken(Board board, Token token, int column, int row)
-	    throws InvalidMove {
-	if (token != Token.NONE && board.isValidColumn(column)) {
+  public Position putToken(Board board, Token token, int column, int row)
+      throws InvalidMove {
+    if (token != Token.NONE && board.isValidColumn(column)) {
 
-	    if (board.isColumnFull(column)) {
+      if (board.isColumnFull(column)) {
 
-		for (int i = board.getHeight() - 1; i >= 1; i--) {
-		    board.setCell(column, i, board.getSlot(column, i - 1));
-		}
-		board.setCell(column, 0, token);
-		return new Position(column, 0);
+        for (int i = board.getHeight() - 1; i >= 1; i--) {
+          board.setCell(column, i, board.getSlot(column, i - 1));
+        }
+        board.setCell(column, 0, token);
+        return new Position(column, 0);
 
-	    } else {
+      } else {
 
-		board.setCell(
-			column,
-			(board.getHeight() - 1)
-				- (board.getTokensInColumn(column)), token);
-		board.setTokensInColumn(column,
-			board.getTokensInColumn(column) + 1);
-		board.setTokens(board.getTokens() + 1);
-		return new Position(column, (board.getHeight() - 1)
-			- (board.getTokensInColumn(column) - 1));
-	    }
-	} else {
-	    throw new InvalidMove();
-	}
+        board.setCell(column,
+            (board.getHeight() - 1) - (board.getTokensInColumn(column)), token);
+        board.setTokensInColumn(column, board.getTokensInColumn(column) + 1);
+        board.setTokens(board.getTokens() + 1);
+        return new Position(column, (board.getHeight() - 1)
+            - (board.getTokensInColumn(column) - 1));
+      }
+    } else {
+      throw new InvalidMove();
     }
+  }
 }

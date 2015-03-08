@@ -36,534 +36,524 @@ import logic.strategy.ConnectFourTokenMove;
 
 public class BoardTest extends TestCase {
 
-    public void testGetSlot() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
-	assertEquals("Fails when the board is empty", board.getSlot(0, 8),
-		Token.NONE);
+  public void testGetSlot() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
+    assertEquals("Fails when the board is empty", board.getSlot(0, 8),
+        Token.NONE);
 
-	try {
+    try {
 
-	    board.putToken(Token.YELLOW, 0, 0);
-	    assertEquals("Fails upon non empty board and YELLOW tokens",
-		    board.getSlot(0, 5), Token.YELLOW);
-	    assertEquals("Fails upon non empty board in empty slot",
-		    board.getSlot(1, 5), Token.NONE);
+      board.putToken(Token.YELLOW, 0, 0);
+      assertEquals("Fails upon non empty board and YELLOW tokens",
+          board.getSlot(0, 5), Token.YELLOW);
+      assertEquals("Fails upon non empty board in empty slot",
+          board.getSlot(1, 5), Token.NONE);
 
-	    board.putToken(Token.RED, 1, 0);
-	    assertEquals("Fails upon non empty board and RED tokens",
-		    board.getSlot(1, 5), Token.RED);
+      board.putToken(Token.RED, 1, 0);
+      assertEquals("Fails upon non empty board and RED tokens",
+          board.getSlot(1, 5), Token.RED);
 
-	} catch (InvalidMove e) {
+    } catch (InvalidMove e) {
 
-	    fail("Fails upon invalid move");
-	}
+      fail("Fails upon invalid move");
+    }
+  }
+
+  public void testPutFourInARowToken() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
+
+    try {
+
+      board.putToken(Token.YELLOW, 6, 0);
+      assertEquals("Fails when putting the first token",
+          board.getSlot(6, board.getHeight() - 1), Token.YELLOW);
+
+      board.putToken(Token.RED, 6, 0);
+      assertEquals("Fails when putting the second token",
+          board.getSlot(6, board.getHeight() - 2), Token.RED);
+
+    } catch (InvalidMove e) {
+
+      fail("Fails upon invalid move");
+    }
+  }
+
+  public void testPutComplicateToken() {
+    String boardCompStr[] = { "R   ", "R   ", "R   ", "Y   ", "Y   ", "Y   ",
+        "RYYY" };
+
+    Board boardComp = BoardUtils.buildBoard(boardCompStr, 4, 7,
+        new PopOutTokenMove());
+
+    try {
+
+      boardComp.putToken(Token.RED, 0, 0);
+      boardComp.putToken(Token.YELLOW, 1, 0);
+
+    } catch (InvalidMove e) {
+
+      fail("Fails upon invalid move");
     }
 
-    public void testPutFourInARowToken() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
+    String boardResStr[] = { "R   ", "R   ", "R   ", "R   ", "Y   ", "YY  ",
+        "YYYY" };
 
-	try {
+    Board boardRes = BoardUtils.buildBoard(boardResStr, 4, 7,
+        new PopOutTokenMove());
+    assertEquals("Falla al desplazar las fichas de columna llena", boardComp,
+        boardRes);
+  }
 
-	    board.putToken(Token.YELLOW, 6, 0);
-	    assertEquals("Fails when putting the first token",
-		    board.getSlot(6, board.getHeight() - 1), Token.YELLOW);
+  public void testIsColumnFull() {
+    String boardStr[] = { "Y      ", "Y      ", "Y      ", "R      ",
+        "R      ", "R      " };
 
-	    board.putToken(Token.RED, 6, 0);
-	    assertEquals("Fails when putting the second token",
-		    board.getSlot(6, board.getHeight() - 2), Token.RED);
+    Board board = BoardUtils.buildBoard(boardStr, 7, 6,
+        new ConnectFourTokenMove());
 
-	} catch (InvalidMove e) {
+    assertFalse("Fails upon invalid column", board.isColumnFull(-1));
+    assertTrue("Fails upon full column", board.isColumnFull(0));
+    assertFalse("Fails upon not full column", board.isColumnFull(1));
+  }
 
-	    fail("Fails upon invalid move");
-	}
+  public void testIsValidColumn() {
+    Board board = new Board();
+
+    assertFalse("Fails upon invalid column", board.isValidColumn(-1));
+    assertFalse("Fails upon invalid column",
+        board.isValidColumn(board.getWidth()));
+
+    assertTrue("Fails upon valid column", board.isValidColumn(0));
+    assertTrue("Fails upon valid column",
+        board.isValidColumn(board.getHeight() - 1));
+  }
+
+  public void testIsValidRow() {
+    Board board = new Board();
+
+    assertFalse("Fails upon invalid row", board.isValidRow(-1));
+    assertFalse("Fails upon invalid row", board.isValidRow(board.getHeight()));
+
+    assertTrue("Fails upon valid row", board.isValidRow(0));
+    assertTrue("Fails upon valid row", board.isValidRow(board.getHeight() - 1));
+  }
+
+  public void testFullBoard() {
+    class FullBoard extends Board {
+
+      FullBoard() {
+        _tokens = 42;
+      }
     }
 
-    public void testPutComplicateToken() {
-	String boardCompStr[] = { "R   ", "R   ", "R   ", "Y   ", "Y   ",
-		"Y   ", "RYYY" };
+    Board board1 = new FullBoard();
+    assertTrue("Fails upon full board", board1.isBoardFull());
 
-	Board boardComp = BoardUtils.buildBoard(boardCompStr, 4, 7,
-		new PopOutTokenMove());
+    Board board2 = new Board();
+    assertFalse("Fails upon not full board", board2.isBoardFull());
+  }
 
-	try {
+  public void testGetTokens() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
+    assertTrue("Fails upon empty board", board.getTokens() == 0);
 
-	    boardComp.putToken(Token.RED, 0, 0);
-	    boardComp.putToken(Token.YELLOW, 1, 0);
+    try {
 
-	} catch (InvalidMove e) {
+      board.putToken(Token.YELLOW, 0, 0);
+      assertTrue("Fails upon board with one token", board.getTokens() == 1);
 
-	    fail("Fails upon invalid move");
-	}
+    } catch (InvalidMove e) {
 
-	String boardResStr[] = { "R   ", "R   ", "R   ", "R   ", "Y   ",
-		"YY  ", "YYYY" };
-
-	Board boardRes = BoardUtils.buildBoard(boardResStr, 4, 7,
-		new PopOutTokenMove());
-	assertEquals("Falla al desplazar las fichas de columna llena",
-		boardComp, boardRes);
+      fail("Fails upon invalid move");
     }
+  }
 
-    public void testIsColumnFull() {
-	String boardStr[] = { "Y      ", "Y      ", "Y      ", "R      ",
-		"R      ", "R      " };
+  public void testGetTokensInColumn() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
+    assertTrue("Fails upon empty column", board.getTokensInColumn(0) == 0);
 
-	Board board = BoardUtils.buildBoard(boardStr, 7, 6,
-		new ConnectFourTokenMove());
+    try {
 
-	assertFalse("Fails upon invalid column", board.isColumnFull(-1));
-	assertTrue("Fails upon full column", board.isColumnFull(0));
-	assertFalse("Fails upon not full column", board.isColumnFull(1));
+      board.putToken(Token.YELLOW, 0, 0);
+      assertTrue("Fails upon a board with one token",
+          board.getTokensInColumn(0) == 1);
+
+    } catch (InvalidMove e) {
+
+      fail("Fails upon invalid move");
     }
+  }
 
-    public void testIsValidColumn() {
-	Board board = new Board();
+  public void testYellowHorizontalFourInARow() {
+    Board board1 = new Board(7, 6, new ConnectFourTokenMove());
+    for (int row = 0; row < board1.getHeight(); row++) {
+      for (int column = 0; column < board1.getWidth() - 3; column++) {
 
-	assertFalse("Fails upon invalid column", board.isValidColumn(-1));
-	assertFalse("Fails upon invalid column",
-		board.isValidColumn(board.getWidth()));
+        Board board = new Board(7, 6, new ConnectFourTokenMove());
 
-	assertTrue("Fails upon valid column", board.isValidColumn(0));
-	assertTrue("Fails upon valid column",
-		board.isValidColumn(board.getHeight() - 1));
+        assertFalse("Fails upon empty board",
+            board.fourTokensConnectedHorizontally(Token.YELLOW));
+        assertFalse("Fails upon empty board",
+            board.fourTokensConnectedHorizontally(Token.RED));
+
+        try {
+
+          for (int i = 0; i < row; i++) {
+
+            board.putToken(Token.RED, 0, 0);
+            board.putToken(Token.YELLOW, 1, 0);
+            board.putToken(Token.RED, 2, 0);
+            board.putToken(Token.YELLOW, 3, 0);
+            board.putToken(Token.RED, 4, 0);
+            board.putToken(Token.YELLOW, 5, 0);
+            board.putToken(Token.RED, 6, 0);
+          }
+
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.YELLOW, column + 1, 0);
+          board.putToken(Token.YELLOW, column + 2, 0);
+          board.putToken(Token.YELLOW, column + 3, 0);
+
+          assertTrue("Does not detect four in a row horizontally for YELLOW",
+              board.fourTokensConnectedHorizontally(Token.YELLOW));
+          assertFalse(
+              "Detects four in a row horizontally for the opposite turn",
+              board.fourTokensConnectedHorizontally(Token.RED));
+
+        } catch (InvalidMove ex) {
+
+          fail("Fails upon invalid move");
+        }
+      }
     }
+  }
 
-    public void testIsValidRow() {
-	Board board = new Board();
+  public void testRedHorizontalFourInARow() {
+    Board board1 = new Board();
+    for (int row = 0; row < board1.getHeight(); row++) {
+      for (int column = 0; column < board1.getWidth() - 3; column++) {
 
-	assertFalse("Fails upon invalid row", board.isValidRow(-1));
-	assertFalse("Fails upon invalid row",
-		board.isValidRow(board.getHeight()));
+        Board board = new Board(7, 6, new ConnectFourTokenMove());
 
-	assertTrue("Fails upon valid row", board.isValidRow(0));
-	assertTrue("Fails upon valid row",
-		board.isValidRow(board.getHeight() - 1));
+        assertFalse("Fails upon empty board",
+            board.fourTokensConnectedHorizontally(Token.YELLOW));
+        assertFalse("Fails upon empty board",
+            board.fourTokensConnectedHorizontally(Token.RED));
+
+        try {
+
+          for (int i = 0; i < row; i++) {
+
+            board.putToken(Token.RED, 0, 0);
+            board.putToken(Token.YELLOW, 1, 0);
+            board.putToken(Token.RED, 2, 0);
+            board.putToken(Token.YELLOW, 3, 0);
+            board.putToken(Token.RED, 4, 0);
+            board.putToken(Token.YELLOW, 5, 0);
+            board.putToken(Token.RED, 6, 0);
+          }
+
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.RED, column + 1, 0);
+          board.putToken(Token.RED, column + 2, 0);
+          board.putToken(Token.RED, column + 3, 0);
+
+          assertTrue("Does not detect four in a row horizontally for RED",
+              board.fourTokensConnectedHorizontally(Token.RED));
+          assertFalse(
+              "Detects four in a row horizontally for the opposite turn",
+              board.fourTokensConnectedHorizontally(Token.YELLOW));
+
+        } catch (InvalidMove ex) {
+
+          fail("Fails upon invalid move");
+        }
+      }
     }
+  }
 
-    public void testFullBoard() {
-	class FullBoard extends Board {
+  public void testNoneHorizontalFourInARow() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
+    assertFalse("Detects four in a row horizontally for NONE",
+        board.fourTokensConnectedHorizontally(Token.NONE));
+  }
 
-	    FullBoard() {
-		_tokens = 42;
-	    }
-	}
+  public void testYellowVerticalFourInARow() {
+    Board board1 = new Board(7, 6, new ConnectFourTokenMove());
+    for (int column = 0; column < board1.getWidth(); column++) {
+      for (int times = 0; times < board1.getHeight() - 3; times++) {
 
-	Board board1 = new FullBoard();
-	assertTrue("Fails upon full board", board1.isBoardFull());
+        Board board = new Board(7, 6, new ConnectFourTokenMove());
 
-	Board board2 = new Board();
-	assertFalse("Fails upon not full board", board2.isBoardFull());
+        assertFalse("Fails upon empty board",
+            board.fourTokensConnected(Token.YELLOW));
+        assertFalse("Fails upon empty board",
+            board.fourTokensConnected(Token.RED));
+
+        try {
+
+          for (int i = 0; i < times; i++) {
+            board.putToken(Token.RED, column, 0);
+          }
+
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.YELLOW, column, 0);
+
+          assertTrue("Does not detect four in a row vertically for YELLOW",
+              board.fourTokensConnectedVertically(Token.YELLOW));
+          assertFalse("Detects four in a row vertically for the opposite turn",
+              board.fourTokensConnectedVertically(Token.RED));
+
+        } catch (InvalidMove ex) {
+
+          fail("Fails upon invalid move");
+        }
+      }
     }
+  }
 
-    public void testGetTokens() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
-	assertTrue("Fails upon empty board", board.getTokens() == 0);
+  public void testRedVerticalFourInARow() {
+    Board board1 = new Board(7, 6, new ConnectFourTokenMove());
+    for (int column = 0; column < board1.getWidth(); column++) {
+      for (int times = 0; times < board1.getHeight() - 3; times++) {
 
-	try {
+        Board board = new Board(7, 6, new ConnectFourTokenMove());
 
-	    board.putToken(Token.YELLOW, 0, 0);
-	    assertTrue("Fails upon board with one token",
-		    board.getTokens() == 1);
+        assertFalse("Fails upon empty board",
+            board.fourTokensConnected(Token.YELLOW));
+        assertFalse("Fails upon empty board",
+            board.fourTokensConnected(Token.RED));
 
-	} catch (InvalidMove e) {
+        try {
 
-	    fail("Fails upon invalid move");
-	}
+          for (int i = 0; i < times; i++) {
+            board.putToken(Token.YELLOW, column, 0);
+          }
+
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.RED, column, 0);
+
+          assertTrue("Does not detect four in a row vertically for RED",
+              board.fourTokensConnectedVertically(Token.RED));
+          assertFalse("Detects four in a row vertically for the opposite turn",
+              board.fourTokensConnectedVertically(Token.YELLOW));
+
+        } catch (InvalidMove ex) {
+
+          fail("Fails upon invalid move");
+        }
+      }
     }
+  }
 
-    public void testGetTokensInColumn() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
-	assertTrue("Fails upon empty column", board.getTokensInColumn(0) == 0);
+  public void testNoneVerticalFourInARow() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
+    assertFalse("Detects four in a row vertically for NONE",
+        board.fourTokensConnectedVertically(Token.NONE));
+  }
 
-	try {
+  public void testYellowLeftDiagonalFourInARow() {
+    Board board1 = new Board(7, 6, new ConnectFourTokenMove());
+    for (int column = 0; column < board1.getWidth() - 3; column++) {
+      for (int times = 0; times < board1.getHeight() - 3; times++) {
 
-	    board.putToken(Token.YELLOW, 0, 0);
-	    assertTrue("Fails upon a board with one token",
-		    board.getTokensInColumn(0) == 1);
+        Board board = new Board(7, 6, new ConnectFourTokenMove());
 
-	} catch (InvalidMove e) {
+        assertFalse("Fails upon empty board",
+            board.connectedLeftDiagonally(Token.YELLOW));
+        assertFalse("Fails upon empty board",
+            board.connectedLeftDiagonally(Token.RED));
 
-	    fail("Fails upon invalid move");
-	}
+        try {
+
+          board.putToken(Token.YELLOW, column + 1, 0);
+          board.putToken(Token.RED, column + 2, 0);
+          board.putToken(Token.YELLOW, column + 2, 0);
+          board.putToken(Token.RED, column + 3, 0);
+          board.putToken(Token.YELLOW, column + 3, 0);
+          board.putToken(Token.RED, column + 3, 0);
+
+          for (int i = 0; i < times; i++) {
+            board.putToken(Token.RED, column, 0);
+            board.putToken(Token.YELLOW, column + 1, 0);
+            board.putToken(Token.RED, column + 2, 0);
+            board.putToken(Token.YELLOW, column + 3, 0);
+          }
+
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.YELLOW, column + 1, 0);
+          board.putToken(Token.YELLOW, column + 2, 0);
+          board.putToken(Token.YELLOW, column + 3, 0);
+
+          assertTrue(
+              "Does not detect four in a row left diagonally for YELLOW",
+              board.connectedLeftDiagonally(Token.YELLOW));
+          assertFalse(
+              "Detects four in a row left diagonally for the opposite turn",
+              board.connectedLeftDiagonally(Token.RED));
+
+        } catch (InvalidMove ex) {
+
+          fail("Fails upon invalid move");
+        }
+      }
     }
+  }
 
-    public void testYellowHorizontalFourInARow() {
-	Board board1 = new Board(7, 6, new ConnectFourTokenMove());
-	for (int row = 0; row < board1.getHeight(); row++) {
-	    for (int column = 0; column < board1.getWidth() - 3; column++) {
+  public void testRedLeftDiagonalFourInARow() {
+    Board board1 = new Board(7, 6, new ConnectFourTokenMove());
+    for (int column = 0; column < board1.getWidth() - 3; column++) {
+      for (int times = 0; times < board1.getHeight() - 3; times++) {
 
-		Board board = new Board(7, 6, new ConnectFourTokenMove());
+        Board board = new Board(7, 6, new ConnectFourTokenMove());
 
-		assertFalse("Fails upon empty board",
-			board.fourTokensConnectedHorizontally(Token.YELLOW));
-		assertFalse("Fails upon empty board",
-			board.fourTokensConnectedHorizontally(Token.RED));
+        assertFalse("Fails upon empty board",
+            board.connectedLeftDiagonally(Token.YELLOW));
+        assertFalse("Fails upon empty board",
+            board.connectedLeftDiagonally(Token.RED));
 
-		try {
+        try {
 
-		    for (int i = 0; i < row; i++) {
+          board.putToken(Token.RED, column + 1, 0);
+          board.putToken(Token.YELLOW, column + 2, 0);
+          board.putToken(Token.RED, column + 2, 0);
+          board.putToken(Token.YELLOW, column + 3, 0);
+          board.putToken(Token.RED, column + 3, 0);
+          board.putToken(Token.YELLOW, column + 3, 0);
 
-			board.putToken(Token.RED, 0, 0);
-			board.putToken(Token.YELLOW, 1, 0);
-			board.putToken(Token.RED, 2, 0);
-			board.putToken(Token.YELLOW, 3, 0);
-			board.putToken(Token.RED, 4, 0);
-			board.putToken(Token.YELLOW, 5, 0);
-			board.putToken(Token.RED, 6, 0);
-		    }
+          for (int i = 0; i < times; i++) {
+            board.putToken(Token.YELLOW, column, 0);
+            board.putToken(Token.RED, column + 1, 0);
+            board.putToken(Token.YELLOW, column + 2, 0);
+            board.putToken(Token.RED, column + 3, 0);
+          }
 
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.YELLOW, column + 1, 0);
-		    board.putToken(Token.YELLOW, column + 2, 0);
-		    board.putToken(Token.YELLOW, column + 3, 0);
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.RED, column + 1, 0);
+          board.putToken(Token.RED, column + 2, 0);
+          board.putToken(Token.RED, column + 3, 0);
 
-		    assertTrue(
-			    "Does not detect four in a row horizontally for YELLOW",
-			    board.fourTokensConnectedHorizontally(Token.YELLOW));
-		    assertFalse(
-			    "Detects four in a row horizontally for the opposite turn",
-			    board.fourTokensConnectedHorizontally(Token.RED));
+          assertTrue("Does not detect four in a row left diagonally for RED",
+              board.connectedLeftDiagonally(Token.RED));
+          assertFalse(
+              "Detects four in a row left diagonally for the opposite turn",
+              board.connectedLeftDiagonally(Token.YELLOW));
 
-		} catch (InvalidMove ex) {
+        } catch (InvalidMove ex) {
 
-		    fail("Fails upon invalid move");
-		}
-	    }
-	}
+          fail("Fails upon invalid move");
+        }
+      }
     }
+  }
 
-    public void testRedHorizontalFourInARow() {
-	Board board1 = new Board();
-	for (int row = 0; row < board1.getHeight(); row++) {
-	    for (int column = 0; column < board1.getWidth() - 3; column++) {
+  public void testNoneLeftDiagonalFourInARow() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
+    assertFalse("Detects four in a row left diagonally for NONE",
+        board.connectedLeftDiagonally(Token.NONE));
+  }
 
-		Board board = new Board(7, 6, new ConnectFourTokenMove());
+  public void testYellowRightDiagonalFourInARow() {
+    Board board1 = new Board(7, 6, new ConnectFourTokenMove());
+    for (int column = 0; column < board1.getWidth() - 3; column++) {
+      for (int times = 0; times < board1.getHeight() - 3; times++) {
 
-		assertFalse("Fails upon empty board",
-			board.fourTokensConnectedHorizontally(Token.YELLOW));
-		assertFalse("Fails upon empty board",
-			board.fourTokensConnectedHorizontally(Token.RED));
+        Board board = new Board(7, 6, new ConnectFourTokenMove());
+        assertFalse("Fails upon empty board",
+            board.connectedRightDiagonally(Token.YELLOW));
+        assertFalse("Fails upon empty board",
+            board.connectedRightDiagonally(Token.RED));
 
-		try {
+        try {
 
-		    for (int i = 0; i < row; i++) {
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.RED, column + 1, 0);
+          board.putToken(Token.YELLOW, column + 1, 0);
+          board.putToken(Token.RED, column + 2, 0);
 
-			board.putToken(Token.RED, 0, 0);
-			board.putToken(Token.YELLOW, 1, 0);
-			board.putToken(Token.RED, 2, 0);
-			board.putToken(Token.YELLOW, 3, 0);
-			board.putToken(Token.RED, 4, 0);
-			board.putToken(Token.YELLOW, 5, 0);
-			board.putToken(Token.RED, 6, 0);
-		    }
+          for (int i = 0; i < times; i++) {
+            board.putToken(Token.RED, column, 0);
+            board.putToken(Token.YELLOW, column + 1, 0);
+            board.putToken(Token.RED, column + 2, 0);
+            board.putToken(Token.YELLOW, column + 3, 0);
+          }
 
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.RED, column + 1, 0);
-		    board.putToken(Token.RED, column + 2, 0);
-		    board.putToken(Token.RED, column + 3, 0);
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.YELLOW, column + 1, 0);
+          board.putToken(Token.YELLOW, column + 2, 0);
+          board.putToken(Token.YELLOW, column + 3, 0);
 
-		    assertTrue(
-			    "Does not detect four in a row horizontally for RED",
-			    board.fourTokensConnectedHorizontally(Token.RED));
-		    assertFalse(
-			    "Detects four in a row horizontally for the opposite turn",
-			    board.fourTokensConnectedHorizontally(Token.YELLOW));
+          assertTrue(
+              "Does not detect four in a row right diagonally for YELLOW.",
+              board.connectedRightDiagonally(Token.YELLOW));
+          assertFalse(
+              "Detects four in a row right diagonally for the opposite turn",
+              board.connectedRightDiagonally(Token.RED));
 
-		} catch (InvalidMove ex) {
+        } catch (InvalidMove ex) {
 
-		    fail("Fails upon invalid move");
-		}
-	    }
-	}
+          fail("Fails upon invalid move");
+        }
+      }
     }
+  }
 
-    public void testNoneHorizontalFourInARow() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
-	assertFalse("Detects four in a row horizontally for NONE",
-		board.fourTokensConnectedHorizontally(Token.NONE));
+  public void testRedRightDiagonalFourInARow() {
+    Board board1 = new Board(7, 6, new ConnectFourTokenMove());
+    for (int column = 0; column < board1.getWidth() - 3; column++) {
+      for (int times = 0; times < board1.getHeight() - 3; times++) {
+
+        Board board = new Board(7, 6, new ConnectFourTokenMove());
+        assertFalse("Fails upon empty board",
+            board.connectedRightDiagonally(Token.YELLOW));
+        assertFalse("Fails upon empty board",
+            board.connectedRightDiagonally(Token.RED));
+
+        try {
+
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.YELLOW, column, 0);
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.YELLOW, column + 1, 0);
+          board.putToken(Token.RED, column + 1, 0);
+          board.putToken(Token.YELLOW, column + 2, 0);
+
+          for (int i = 0; i < times; i++) {
+            board.putToken(Token.YELLOW, column, 0);
+            board.putToken(Token.RED, column + 1, 0);
+            board.putToken(Token.YELLOW, column + 2, 0);
+            board.putToken(Token.RED, column + 3, 0);
+          }
+
+          board.putToken(Token.RED, column, 0);
+          board.putToken(Token.RED, column + 1, 0);
+          board.putToken(Token.RED, column + 2, 0);
+          board.putToken(Token.RED, column + 3, 0);
+
+          assertTrue(
+              "Does not detect four in a row right diagonally for YELLOW.",
+              board.connectedRightDiagonally(Token.RED));
+          assertFalse(
+              "Detects four in a row right diagonally for the opposite turn",
+              board.connectedRightDiagonally(Token.YELLOW));
+
+        } catch (InvalidMove ex) {
+
+          fail("Fails upon invalid move");
+        }
+      }
     }
+  }
 
-    public void testYellowVerticalFourInARow() {
-	Board board1 = new Board(7, 6, new ConnectFourTokenMove());
-	for (int column = 0; column < board1.getWidth(); column++) {
-	    for (int times = 0; times < board1.getHeight() - 3; times++) {
-
-		Board board = new Board(7, 6, new ConnectFourTokenMove());
-
-		assertFalse("Fails upon empty board",
-			board.fourTokensConnected(Token.YELLOW));
-		assertFalse("Fails upon empty board",
-			board.fourTokensConnected(Token.RED));
-
-		try {
-
-		    for (int i = 0; i < times; i++) {
-			board.putToken(Token.RED, column, 0);
-		    }
-
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.YELLOW, column, 0);
-
-		    assertTrue(
-			    "Does not detect four in a row vertically for YELLOW",
-			    board.fourTokensConnectedVertically(Token.YELLOW));
-		    assertFalse(
-			    "Detects four in a row vertically for the opposite turn",
-			    board.fourTokensConnectedVertically(Token.RED));
-
-		} catch (InvalidMove ex) {
-
-		    fail("Fails upon invalid move");
-		}
-	    }
-	}
-    }
-
-    public void testRedVerticalFourInARow() {
-	Board board1 = new Board(7, 6, new ConnectFourTokenMove());
-	for (int column = 0; column < board1.getWidth(); column++) {
-	    for (int times = 0; times < board1.getHeight() - 3; times++) {
-
-		Board board = new Board(7, 6, new ConnectFourTokenMove());
-
-		assertFalse("Fails upon empty board",
-			board.fourTokensConnected(Token.YELLOW));
-		assertFalse("Fails upon empty board",
-			board.fourTokensConnected(Token.RED));
-
-		try {
-
-		    for (int i = 0; i < times; i++) {
-			board.putToken(Token.YELLOW, column, 0);
-		    }
-
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.RED, column, 0);
-
-		    assertTrue(
-			    "Does not detect four in a row vertically for RED",
-			    board.fourTokensConnectedVertically(Token.RED));
-		    assertFalse(
-			    "Detects four in a row vertically for the opposite turn",
-			    board.fourTokensConnectedVertically(Token.YELLOW));
-
-		} catch (InvalidMove ex) {
-
-		    fail("Fails upon invalid move");
-		}
-	    }
-	}
-    }
-
-    public void testNoneVerticalFourInARow() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
-	assertFalse("Detects four in a row vertically for NONE",
-		board.fourTokensConnectedVertically(Token.NONE));
-    }
-
-    public void testYellowLeftDiagonalFourInARow() {
-	Board board1 = new Board(7, 6, new ConnectFourTokenMove());
-	for (int column = 0; column < board1.getWidth() - 3; column++) {
-	    for (int times = 0; times < board1.getHeight() - 3; times++) {
-
-		Board board = new Board(7, 6, new ConnectFourTokenMove());
-
-		assertFalse("Fails upon empty board",
-			board.connectedLeftDiagonally(Token.YELLOW));
-		assertFalse("Fails upon empty board",
-			board.connectedLeftDiagonally(Token.RED));
-
-		try {
-
-		    board.putToken(Token.YELLOW, column + 1, 0);
-		    board.putToken(Token.RED, column + 2, 0);
-		    board.putToken(Token.YELLOW, column + 2, 0);
-		    board.putToken(Token.RED, column + 3, 0);
-		    board.putToken(Token.YELLOW, column + 3, 0);
-		    board.putToken(Token.RED, column + 3, 0);
-
-		    for (int i = 0; i < times; i++) {
-			board.putToken(Token.RED, column, 0);
-			board.putToken(Token.YELLOW, column + 1, 0);
-			board.putToken(Token.RED, column + 2, 0);
-			board.putToken(Token.YELLOW, column + 3, 0);
-		    }
-
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.YELLOW, column + 1, 0);
-		    board.putToken(Token.YELLOW, column + 2, 0);
-		    board.putToken(Token.YELLOW, column + 3, 0);
-
-		    assertTrue(
-			    "Does not detect four in a row left diagonally for YELLOW",
-			    board.connectedLeftDiagonally(Token.YELLOW));
-		    assertFalse(
-			    "Detects four in a row left diagonally for the opposite turn",
-			    board.connectedLeftDiagonally(Token.RED));
-
-		} catch (InvalidMove ex) {
-
-		    fail("Fails upon invalid move");
-		}
-	    }
-	}
-    }
-
-    public void testRedLeftDiagonalFourInARow() {
-	Board board1 = new Board(7, 6, new ConnectFourTokenMove());
-	for (int column = 0; column < board1.getWidth() - 3; column++) {
-	    for (int times = 0; times < board1.getHeight() - 3; times++) {
-
-		Board board = new Board(7, 6, new ConnectFourTokenMove());
-
-		assertFalse("Fails upon empty board",
-			board.connectedLeftDiagonally(Token.YELLOW));
-		assertFalse("Fails upon empty board",
-			board.connectedLeftDiagonally(Token.RED));
-
-		try {
-
-		    board.putToken(Token.RED, column + 1, 0);
-		    board.putToken(Token.YELLOW, column + 2, 0);
-		    board.putToken(Token.RED, column + 2, 0);
-		    board.putToken(Token.YELLOW, column + 3, 0);
-		    board.putToken(Token.RED, column + 3, 0);
-		    board.putToken(Token.YELLOW, column + 3, 0);
-
-		    for (int i = 0; i < times; i++) {
-			board.putToken(Token.YELLOW, column, 0);
-			board.putToken(Token.RED, column + 1, 0);
-			board.putToken(Token.YELLOW, column + 2, 0);
-			board.putToken(Token.RED, column + 3, 0);
-		    }
-
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.RED, column + 1, 0);
-		    board.putToken(Token.RED, column + 2, 0);
-		    board.putToken(Token.RED, column + 3, 0);
-
-		    assertTrue(
-			    "Does not detect four in a row left diagonally for RED",
-			    board.connectedLeftDiagonally(Token.RED));
-		    assertFalse(
-			    "Detects four in a row left diagonally for the opposite turn",
-			    board.connectedLeftDiagonally(Token.YELLOW));
-
-		} catch (InvalidMove ex) {
-
-		    fail("Fails upon invalid move");
-		}
-	    }
-	}
-    }
-
-    public void testNoneLeftDiagonalFourInARow() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
-	assertFalse("Detects four in a row left diagonally for NONE",
-		board.connectedLeftDiagonally(Token.NONE));
-    }
-
-    public void testYellowRightDiagonalFourInARow() {
-	Board board1 = new Board(7, 6, new ConnectFourTokenMove());
-	for (int column = 0; column < board1.getWidth() - 3; column++) {
-	    for (int times = 0; times < board1.getHeight() - 3; times++) {
-
-		Board board = new Board(7, 6, new ConnectFourTokenMove());
-		assertFalse("Fails upon empty board",
-			board.connectedRightDiagonally(Token.YELLOW));
-		assertFalse("Fails upon empty board",
-			board.connectedRightDiagonally(Token.RED));
-
-		try {
-
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.RED, column + 1, 0);
-		    board.putToken(Token.YELLOW, column + 1, 0);
-		    board.putToken(Token.RED, column + 2, 0);
-
-		    for (int i = 0; i < times; i++) {
-			board.putToken(Token.RED, column, 0);
-			board.putToken(Token.YELLOW, column + 1, 0);
-			board.putToken(Token.RED, column + 2, 0);
-			board.putToken(Token.YELLOW, column + 3, 0);
-		    }
-
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.YELLOW, column + 1, 0);
-		    board.putToken(Token.YELLOW, column + 2, 0);
-		    board.putToken(Token.YELLOW, column + 3, 0);
-
-		    assertTrue(
-			    "Does not detect four in a row right diagonally for YELLOW.",
-			    board.connectedRightDiagonally(Token.YELLOW));
-		    assertFalse(
-			    "Detects four in a row right diagonally for the opposite turn",
-			    board.connectedRightDiagonally(Token.RED));
-
-		} catch (InvalidMove ex) {
-
-		    fail("Fails upon invalid move");
-		}
-	    }
-	}
-    }
-
-    public void testRedRightDiagonalFourInARow() {
-	Board board1 = new Board(7, 6, new ConnectFourTokenMove());
-	for (int column = 0; column < board1.getWidth() - 3; column++) {
-	    for (int times = 0; times < board1.getHeight() - 3; times++) {
-
-		Board board = new Board(7, 6, new ConnectFourTokenMove());
-		assertFalse("Fails upon empty board",
-			board.connectedRightDiagonally(Token.YELLOW));
-		assertFalse("Fails upon empty board",
-			board.connectedRightDiagonally(Token.RED));
-
-		try {
-
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.YELLOW, column, 0);
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.YELLOW, column + 1, 0);
-		    board.putToken(Token.RED, column + 1, 0);
-		    board.putToken(Token.YELLOW, column + 2, 0);
-
-		    for (int i = 0; i < times; i++) {
-			board.putToken(Token.YELLOW, column, 0);
-			board.putToken(Token.RED, column + 1, 0);
-			board.putToken(Token.YELLOW, column + 2, 0);
-			board.putToken(Token.RED, column + 3, 0);
-		    }
-
-		    board.putToken(Token.RED, column, 0);
-		    board.putToken(Token.RED, column + 1, 0);
-		    board.putToken(Token.RED, column + 2, 0);
-		    board.putToken(Token.RED, column + 3, 0);
-
-		    assertTrue(
-			    "Does not detect four in a row right diagonally for YELLOW.",
-			    board.connectedRightDiagonally(Token.RED));
-		    assertFalse(
-			    "Detects four in a row right diagonally for the opposite turn",
-			    board.connectedRightDiagonally(Token.YELLOW));
-
-		} catch (InvalidMove ex) {
-
-		    fail("Fails upon invalid move");
-		}
-	    }
-	}
-    }
-
-    public void testNoneRightDiagonalFourInARow() {
-	Board board = new Board(7, 6, new ConnectFourTokenMove());
-	assertFalse("Detects four in a row right diagonally for NONE",
-		board.connectedRightDiagonally(Token.NONE));
-    }
+  public void testNoneRightDiagonalFourInARow() {
+    Board board = new Board(7, 6, new ConnectFourTokenMove());
+    assertFalse("Detects four in a row right diagonally for NONE",
+        board.connectedRightDiagonally(Token.NONE));
+  }
 }

@@ -31,5 +31,5 @@ import logic.Token;
 
 public interface Player {
 
-    public Position getMove(Token[][] tokens);
+  public Position getMove(Token[][] tokens);
 }

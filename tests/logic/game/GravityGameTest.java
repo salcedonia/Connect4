@@ -34,32 +34,32 @@ import logic.game.GravityGame;
 
 public class GravityGameTest extends TestCase {
 
-    public void testPutToken() {
-	Game game = new GravityGame(10, 10);
-	game.startGame();
+  public void testPutToken() {
+    Game game = new GravityGame(10, 10);
+    game.startGame();
 
-	game.setToken(new Position(-1, 0));
-	assertEquals("Changes the turn upon an invalid move", game.getTurn(),
-		Token.YELLOW);
+    game.setToken(new Position(-1, 0));
+    assertEquals("Changes the turn upon an invalid move", game.getTurn(),
+        Token.YELLOW);
 
-	game.setToken(new Position(0, 0));
-	assertEquals("Does not change the turn upon valid move",
-		game.getTurn(), Token.RED);
-    }
+    game.setToken(new Position(0, 0));
+    assertEquals("Does not change the turn upon valid move", game.getTurn(),
+        Token.RED);
+  }
 
-    public void testGetRows() {
-	Game game = new GravityGame(5, 5);
-	game.startGame();
-	assertEquals(
-		"Fails when returning the number of rows of the board in a Gravity game",
-		game.getRows(), 5);
-    }
+  public void testGetRows() {
+    Game game = new GravityGame(5, 5);
+    game.startGame();
+    assertEquals(
+        "Fails when returning the number of rows of the board in a Gravity game",
+        game.getRows(), 5);
+  }
 
-    public void testGetColumns() {
-	Game game = new GravityGame(5, 5);
-	game.startGame();
-	assertEquals(
-		"Fails when returning the number of columns of the board in a Gravity game",
-		game.getColumns(), 5);
-    }
+  public void testGetColumns() {
+    Game game = new GravityGame(5, 5);
+    game.startGame();
+    assertEquals(
+        "Fails when returning the number of columns of the board in a Gravity game",
+        game.getColumns(), 5);
+  }
 }

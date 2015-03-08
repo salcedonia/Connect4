@@ -33,9 +33,9 @@ import logic.game.Game;
 
 public interface GameInterface {
 
-    public void setGame(Game p) throws IOException;
+  public void setGame(Game p) throws IOException;
 
-    public AskPlayAgain getAskPlayAgain();
+  public AskPlayAgain getAskPlayAgain();
 
-    public void terminateGame();
+  public void terminateGame();
 }

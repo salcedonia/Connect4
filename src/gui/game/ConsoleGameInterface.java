@@ -36,26 +36,26 @@ import logic.game.Game;
 
 public class ConsoleGameInterface implements GameInterface {
 
-    private ConsoleInterface _interface;
-    private Scanner _scanner;
-    private int _width;
-    private int _height;
+  private ConsoleInterface _interface;
+  private Scanner _scanner;
+  private int _width;
+  private int _height;
 
-    public ConsoleGameInterface(Scanner scanner, int width, int height) {
-	_scanner = scanner;
-	_width = width;
-	_height = height;
-    }
+  public ConsoleGameInterface(Scanner scanner, int width, int height) {
+    _scanner = scanner;
+    _width = width;
+    _height = height;
+  }
 
-    public void setGame(Game game) {
-	_interface = new ConsoleInterface(_width, _height);
-	game.addObserver(_interface);
-    }
+  public void setGame(Game game) {
+    _interface = new ConsoleInterface(_width, _height);
+    game.addObserver(_interface);
+  }
 
-    public AskPlayAgain getAskPlayAgain() {
-	return new ConsolePlayAgain(_scanner);
-    }
+  public AskPlayAgain getAskPlayAgain() {
+    return new ConsolePlayAgain(_scanner);
+  }
 
-    public void terminateGame() {
-    }
+  public void terminateGame() {
+  }
 }

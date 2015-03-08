@@ -30,9 +30,9 @@ import logic.Token;
 
 public interface GameObserver {
 
-    public void gameStarted();
+  public void gameStarted();
 
-    public void gameOver(Token winner);
+  public void gameOver(Token winner);
 
-    public void movePerformedInBoard(Token color, int column, int row);
+  public void movePerformedInBoard(Token color, int column, int row);
 }

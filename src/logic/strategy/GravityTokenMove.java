@@ -34,93 +34,92 @@ import logic.Token;
 
 public class GravityTokenMove implements TokenMoveStrategy {
 
-    public Position putToken(Board board, Token token, int column, int row)
-	    throws InvalidMove {
-	Gravity gravedad = computeGravity(column, row, board.getWidth(),
-		board.getHeight());
-	Position posFinal = computeFinalGravityPosition(gravedad, board,
-		column, row);
+  public Position putToken(Board board, Token token, int column, int row)
+      throws InvalidMove {
+    Gravity gravedad = computeGravity(column, row, board.getWidth(),
+        board.getHeight());
+    Position posFinal = computeFinalGravityPosition(gravedad, board, column,
+        row);
 
-	return setToken(board, token, posFinal.getX(), posFinal.getY());
+    return setToken(board, token, posFinal.getX(), posFinal.getY());
+  }
+
+  private Gravity computeGravity(int column, int row, int columns, int rows) {
+    int superiorGravity = row;
+    int inferiorGravity = (rows - 1) - row;
+    int leftGravity = column;
+    int rightGravity = (columns - 1) - column;
+
+    int bestVertical = Integer.MAX_VALUE, bestHorizontal = Integer.MAX_VALUE;
+    int gravHorizontal = 0, gravVertical = 0;
+
+    if (superiorGravity < inferiorGravity) {
+
+      bestVertical = superiorGravity;
+      gravVertical = -1;
+    } else {
+      if (superiorGravity > inferiorGravity) {
+
+        bestVertical = inferiorGravity;
+        gravVertical = 1;
+      }
     }
 
-    private Gravity computeGravity(int column, int row, int columns, int rows) {
-	int superiorGravity = row;
-	int inferiorGravity = (rows - 1) - row;
-	int leftGravity = column;
-	int rightGravity = (columns - 1) - column;
+    if (leftGravity < rightGravity) {
 
-	int bestVertical = Integer.MAX_VALUE, bestHorizontal = Integer.MAX_VALUE;
-	int gravHorizontal = 0, gravVertical = 0;
+      bestHorizontal = leftGravity;
+      gravHorizontal = -1;
+    } else {
+      if (leftGravity > rightGravity) {
 
-	if (superiorGravity < inferiorGravity) {
-
-	    bestVertical = superiorGravity;
-	    gravVertical = -1;
-	} else {
-	    if (superiorGravity > inferiorGravity) {
-
-		bestVertical = inferiorGravity;
-		gravVertical = 1;
-	    }
-	}
-
-	if (leftGravity < rightGravity) {
-
-	    bestHorizontal = leftGravity;
-	    gravHorizontal = -1;
-	} else {
-	    if (leftGravity > rightGravity) {
-
-		bestHorizontal = rightGravity;
-		gravHorizontal = 1;
-	    }
-	}
-
-	if (bestVertical != bestHorizontal) {
-
-	    if (bestVertical < bestHorizontal) {
-		gravHorizontal = 0;
-	    } else {
-		gravVertical = 0;
-	    }
-	}
-
-	return new Gravity(gravHorizontal, gravVertical);
+        bestHorizontal = rightGravity;
+        gravHorizontal = 1;
+      }
     }
 
-    private Position computeFinalGravityPosition(Gravity gravity, Board board,
-	    int column, int row) {
-	int columnAux = column, rowAux = row;
+    if (bestVertical != bestHorizontal) {
 
-	do {
-	    columnAux = columnAux + gravity.getHorizontalGravity();
-	    rowAux = rowAux + gravity.getVerticalGravity();
-	} while ((columnAux != column || rowAux != row)
-		&& (board.isValidCell(columnAux, rowAux))
-		&& (board.getSlot(columnAux, rowAux) == Token.NONE));
-
-	return new Position(columnAux - gravity.getHorizontalGravity(), rowAux
-		- gravity.getVerticalGravity());
+      if (bestVertical < bestHorizontal) {
+        gravHorizontal = 0;
+      } else {
+        gravVertical = 0;
+      }
     }
 
-    private Position setToken(Board board, Token token, int column, int row)
-	    throws InvalidMove {
-	if (token != Token.NONE && board.isValidCell(column, row)) {
+    return new Gravity(gravHorizontal, gravVertical);
+  }
 
-	    if (board.getSlot(column, row) == Token.NONE) {
+  private Position computeFinalGravityPosition(Gravity gravity, Board board,
+      int column, int row) {
+    int columnAux = column, rowAux = row;
 
-		board.setCell(column, row, token);
-		board.setTokensInColumn(column,
-			board.getTokensInColumn(column) + 1);
-		board.setTokens(board.getTokens() + 1);
+    do {
+      columnAux = columnAux + gravity.getHorizontalGravity();
+      rowAux = rowAux + gravity.getVerticalGravity();
+    } while ((columnAux != column || rowAux != row)
+        && (board.isValidCell(columnAux, rowAux))
+        && (board.getSlot(columnAux, rowAux) == Token.NONE));
 
-		return new Position(column, row);
-	    } else {
-		throw new InvalidMove();
-	    }
-	} else {
-	    throw new InvalidMove();
-	}
+    return new Position(columnAux - gravity.getHorizontalGravity(), rowAux
+        - gravity.getVerticalGravity());
+  }
+
+  private Position setToken(Board board, Token token, int column, int row)
+      throws InvalidMove {
+    if (token != Token.NONE && board.isValidCell(column, row)) {
+
+      if (board.getSlot(column, row) == Token.NONE) {
+
+        board.setCell(column, row, token);
+        board.setTokensInColumn(column, board.getTokensInColumn(column) + 1);
+        board.setTokens(board.getTokens() + 1);
+
+        return new Position(column, row);
+      } else {
+        throw new InvalidMove();
+      }
+    } else {
+      throw new InvalidMove();
     }
+  }
 }

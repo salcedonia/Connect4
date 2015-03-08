@@ -33,88 +33,88 @@ import logic.Token;
 
 public class ConsoleHumanPlayer implements Player {
 
-    private boolean _rowSensitive;
-    private Scanner _scanner;
+  private boolean _rowSensitive;
+  private Scanner _scanner;
 
-    public ConsoleHumanPlayer(Scanner scanner, boolean rowSensitive) {
-	_rowSensitive = rowSensitive;
-	_scanner = scanner;
+  public ConsoleHumanPlayer(Scanner scanner, boolean rowSensitive) {
+    _rowSensitive = rowSensitive;
+    _scanner = scanner;
+  }
+
+  public Position getMove(Token[][] board) {
+    int column = getColumn(board.length), row = 0;
+
+    if (_rowSensitive) {
+      row = getRow(board[0].length);
     }
+    return new Position(column, row);
+  }
 
-    public Position getMove(Token[][] board) {
-	int column = getColumn(board.length), row = 0;
+  public int getColumn(int width) {
+    String string = null;
+    int column = 0;
 
-	if (_rowSensitive) {
-	    row = getRow(board[0].length);
-	}
-	return new Position(column, row);
-    }
+    do {
+      try {
 
-    public int getColumn(int width) {
-	String string = null;
-	int column = 0;
+        System.out.printf("    Enter the column (0-%1$d): ", width - 1);
 
-	do {
-	    try {
+        string = _scanner.nextLine();
+        column = Integer.parseInt(string);
 
-		System.out.printf("    Enter the column (0-%1$d): ", width - 1);
+        if (!isValidColumn(column, width)) {
+          System.err.println("    -> Invalid column.");
+          System.err.println();
+        }
+        System.out.println();
 
-		string = _scanner.nextLine();
-		column = Integer.parseInt(string);
+      } catch (NumberFormatException ex) {
 
-		if (!isValidColumn(column, width)) {
-		    System.err.println("    -> Invalid column.");
-		    System.err.println();
-		}
-		System.out.println();
+        System.err.println("    -> Invalid column format.");
+        System.err.println();
+        column = -1;
+      }
 
-	    } catch (NumberFormatException ex) {
+    } while (!isValidColumn(column, width));
 
-		System.err.println("    -> Invalid column format.");
-		System.err.println();
-		column = -1;
-	    }
+    return column;
+  }
 
-	} while (!isValidColumn(column, width));
+  public int getRow(int height) {
+    String string = null;
+    int row = 0;
 
-	return column;
-    }
+    do {
+      try {
 
-    public int getRow(int height) {
-	String string = null;
-	int row = 0;
+        System.out.printf("    Enter the row (0-%1$d): ", height - 1);
 
-	do {
-	    try {
+        string = _scanner.nextLine();
+        row = Integer.parseInt(string);
 
-		System.out.printf("    Enter the row (0-%1$d): ", height - 1);
+        if (!isValidRow(row, height)) {
+          System.err.println("    -> Invalid row.");
+          System.err.println();
+        }
+        System.out.println();
 
-		string = _scanner.nextLine();
-		row = Integer.parseInt(string);
+      } catch (NumberFormatException ex) {
 
-		if (!isValidRow(row, height)) {
-		    System.err.println("    -> Invalid row.");
-		    System.err.println();
-		}
-		System.out.println();
+        System.err.println("    -> Invalid row format.");
+        System.err.println();
+        row = -1;
+      }
 
-	    } catch (NumberFormatException ex) {
+    } while (!isValidRow(row, height));
 
-		System.err.println("    -> Invalid row format.");
-		System.err.println();
-		row = -1;
-	    }
+    return row;
+  }
 
-	} while (!isValidRow(row, height));
+  public boolean isValidColumn(int column, int width) {
+    return (column >= 0 && column < width);
+  }
 
-	return row;
-    }
-
-    public boolean isValidColumn(int column, int width) {
-	return (column >= 0 && column < width);
-    }
-
-    public boolean isValidRow(int row, int height) {
-	return (row >= 0 && row < height);
-    }
+  public boolean isValidRow(int row, int height) {
+    return (row >= 0 && row < height);
+  }
 }

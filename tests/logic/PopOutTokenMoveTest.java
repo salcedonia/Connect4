@@ -35,37 +35,36 @@ import logic.strategy.PopOutTokenMove;
 
 public class PopOutTokenMoveTest extends TestCase {
 
-    public void testPutToken() {
+  public void testPutToken() {
 
-	String boardStr1[] = { "R   ", "R   ", "R   ", "Y   ", "Y   ", "Y   ",
-		"RYYY" };
+    String boardStr1[] = { "R   ", "R   ", "R   ", "Y   ", "Y   ", "Y   ",
+        "RYYY" };
 
-	Board board1 = BoardUtils.buildBoard(boardStr1, 4, 7,
-		new PopOutTokenMove());
-	assertTrue("Fails tokens", board1.getTokens() == 10);
-	assertTrue("Fails tokens in column", board1.getTokensInColumn(0) == 7);
+    Board board1 = BoardUtils
+        .buildBoard(boardStr1, 4, 7, new PopOutTokenMove());
+    assertTrue("Fails tokens", board1.getTokens() == 10);
+    assertTrue("Fails tokens in column", board1.getTokensInColumn(0) == 7);
 
-	try {
+    try {
 
-	    board1.putToken(Token.RED, 0, 0);
-	    assertTrue("Fails tokens", board1.getTokens() == 10);
-	    assertTrue("Fails tokens in column",
-		    board1.getTokensInColumn(0) == 7);
+      board1.putToken(Token.RED, 0, 0);
+      assertTrue("Fails tokens", board1.getTokens() == 10);
+      assertTrue("Fails tokens in column", board1.getTokensInColumn(0) == 7);
 
-	    board1.putToken(Token.YELLOW, 1, 0);
-	    assertTrue("Fails tokens", board1.getTokens() == 11);
+      board1.putToken(Token.YELLOW, 1, 0);
+      assertTrue("Fails tokens", board1.getTokens() == 11);
 
-	} catch (InvalidMove e) {
+    } catch (InvalidMove e) {
 
-	    fail("Fails upon invalid move");
-	}
-
-	String boardStr2[] = { "R   ", "R   ", "R   ", "R   ", "Y   ", "YY  ",
-		"YYYY" };
-
-	Board board2 = BoardUtils.buildBoard(boardStr2, 4, 7,
-		new PopOutTokenMove());
-	assertEquals("Fails upon displacing tokens in a full column", board1,
-		board2);
+      fail("Fails upon invalid move");
     }
+
+    String boardStr2[] = { "R   ", "R   ", "R   ", "R   ", "Y   ", "YY  ",
+        "YYYY" };
+
+    Board board2 = BoardUtils
+        .buildBoard(boardStr2, 4, 7, new PopOutTokenMove());
+    assertEquals("Fails upon displacing tokens in a full column", board1,
+        board2);
+  }
 }

@@ -28,5 +28,5 @@ package logic;
 
 public interface AskPlayAgain {
 
-    public boolean playAgain();
+  public boolean playAgain();
 }

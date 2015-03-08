@@ -28,35 +28,35 @@ package logic;
 
 public enum Token {
 
-    NONE, RED, YELLOW;
+  NONE, RED, YELLOW;
 
-    public String toString() {
-	if (this == YELLOW) {
-	    return "Yellow";
-	}
-	if (this == RED) {
-	    return "Red";
-	}
-	return "";
+  public String toString() {
+    if (this == YELLOW) {
+      return "Yellow";
     }
+    if (this == RED) {
+      return "Red";
+    }
+    return "";
+  }
 
-    public char toChar() {
-	if (this == YELLOW) {
-	    return 'Y';
-	}
-	if (this == RED) {
-	    return 'R';
-	}
-	return ' ';
+  public char toChar() {
+    if (this == YELLOW) {
+      return 'Y';
     }
+    if (this == RED) {
+      return 'R';
+    }
+    return ' ';
+  }
 
-    public Token getOpposite() {
-	if (this == YELLOW) {
-	    return Token.RED;
-	}
-	if (this == RED) {
-	    return Token.YELLOW;
-	}
-	return Token.NONE;
+  public Token getOpposite() {
+    if (this == YELLOW) {
+      return Token.RED;
     }
+    if (this == RED) {
+      return Token.YELLOW;
+    }
+    return Token.NONE;
+  }
 }

@@ -32,8 +32,8 @@ import logic.player.Player;
 
 public interface InterfaceFactory {
 
-    public GameInterface createGameInterface(GameType gameType, int width,
-	    int height);
+  public GameInterface createGameInterface(GameType gameType, int width,
+      int height);
 
-    public Player createHumanPlayer(boolean rowSensitive);
+  public Player createHumanPlayer(boolean rowSensitive);
 }

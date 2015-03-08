@@ -33,9 +33,9 @@ import logic.player.Player;
 
 public interface LogicFactory {
 
-    public Game createGame(int columns, int rows);
+  public Game createGame(int columns, int rows);
 
-    public Player createComputerPlayer(Token color);
+  public Player createComputerPlayer(Token color);
 
-    public Player createHumanPlayer(InterfaceFactory interfaceFactory);
+  public Player createHumanPlayer(InterfaceFactory interfaceFactory);
 }

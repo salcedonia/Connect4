@@ -33,6 +33,6 @@ import logic.Token;
 
 public interface TokenMoveStrategy {
 
-    public Position putToken(Board board, Token token, int column, int row)
-	    throws InvalidMove;
+  public Position putToken(Board board, Token token, int column, int row)
+      throws InvalidMove;
 }

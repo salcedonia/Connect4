@@ -43,87 +43,87 @@ import logic.player.Player;
 
 public class Application {
 
-    private Game _game;
-    private LogicFactory _logicFactory;
-    private InterfaceFactory _interfaceFactory;
-    private GameInterface _gameInterface;
+  private Game _game;
+  private LogicFactory _logicFactory;
+  private InterfaceFactory _interfaceFactory;
+  private GameInterface _gameInterface;
 
-    public boolean init(GameType gameType, GameMode gameMode,
-	    PlayerType redPlayerType, PlayerType yellowPlayerType, int columns,
-	    int rows) {
-	try {
+  public boolean init(GameType gameType, GameMode gameMode,
+      PlayerType redPlayerType, PlayerType yellowPlayerType, int columns,
+      int rows) {
+    try {
 
-	    createLogicFactory(gameType);
-	    createInterfaceFactory(gameMode);
+      createLogicFactory(gameType);
+      createInterfaceFactory(gameMode);
 
-	    Player redPlayer = createRedPlayer(redPlayerType);
-	    Player yellowPlayer = createYellowPlayer(yellowPlayerType);
+      Player redPlayer = createRedPlayer(redPlayerType);
+      Player yellowPlayer = createYellowPlayer(yellowPlayerType);
 
-	    configureGame(columns, rows, redPlayer, yellowPlayer);
-	    configureGameInterface(gameType);
+      configureGame(columns, rows, redPlayer, yellowPlayer);
+      configureGameInterface(gameType);
 
-	    _game.setAskPlayAgain(_gameInterface.getAskPlayAgain());
+      _game.setAskPlayAgain(_gameInterface.getAskPlayAgain());
 
-	} catch (IOException e) {
-	    return false;
-	}
-	return true;
+    } catch (IOException e) {
+      return false;
     }
+    return true;
+  }
 
-    public void run() {
-	_game.run();
+  public void run() {
+    _game.run();
+  }
+
+  private void createLogicFactory(GameType gameType) {
+    if (gameType == GameType.CONNECT4) {
+      _logicFactory = new ConnectFourFactory();
+    } else {
+      if (gameType == GameType.POP_OUT) {
+        _logicFactory = new PopOutFactory();
+      } else {
+        _logicFactory = new GravityFactory();
+      }
     }
+  }
 
-    private void createLogicFactory(GameType gameType) {
-	if (gameType == GameType.CONNECT4) {
-	    _logicFactory = new ConnectFourFactory();
-	} else {
-	    if (gameType == GameType.POP_OUT) {
-		_logicFactory = new PopOutFactory();
-	    } else {
-		_logicFactory = new GravityFactory();
-	    }
-	}
+  private void createInterfaceFactory(GameMode gameMode) {
+    if (gameMode == GameMode.CONSOLE) {
+      _interfaceFactory = new ConsoleInterfaceFactory();
+    } else {
+      _interfaceFactory = new GUIInterfaceFactory();
     }
+  }
 
-    private void createInterfaceFactory(GameMode gameMode) {
-	if (gameMode == GameMode.CONSOLE) {
-	    _interfaceFactory = new ConsoleInterfaceFactory();
-	} else {
-	    _interfaceFactory = new GUIInterfaceFactory();
-	}
+  private Player createRedPlayer(PlayerType playerType) {
+    if (playerType == PlayerType.HUMAN) {
+      return _logicFactory.createHumanPlayer(_interfaceFactory);
     }
+    return _logicFactory.createComputerPlayer(Token.RED);
+  }
 
-    private Player createRedPlayer(PlayerType playerType) {
-	if (playerType == PlayerType.HUMAN) {
-	    return _logicFactory.createHumanPlayer(_interfaceFactory);
-	}
-	return _logicFactory.createComputerPlayer(Token.RED);
+  private Player createYellowPlayer(PlayerType playerType) {
+    if (playerType == PlayerType.HUMAN) {
+      return _logicFactory.createHumanPlayer(_interfaceFactory);
     }
+    return _logicFactory.createComputerPlayer(Token.YELLOW);
+  }
 
-    private Player createYellowPlayer(PlayerType playerType) {
-	if (playerType == PlayerType.HUMAN) {
-	    return _logicFactory.createHumanPlayer(_interfaceFactory);
-	}
-	return _logicFactory.createComputerPlayer(Token.YELLOW);
-    }
+  private void configureGame(int columns, int rows, Player redPlayer,
+      Player yellowPlayer) {
+    _game = _logicFactory.createGame(columns, rows);
+    _game.setPlayers(redPlayer, yellowPlayer);
+  }
 
-    private void configureGame(int columns, int rows, Player redPlayer,
-	    Player yellowPlayer) {
-	_game = _logicFactory.createGame(columns, rows);
-	_game.setPlayers(redPlayer, yellowPlayer);
-    }
+  private void configureGameInterface(GameType gameType) throws IOException {
+    int width = _game.getColumns();
+    int height = _game.getRows();
 
-    private void configureGameInterface(GameType gameType) throws IOException {
-	int width = _game.getColumns();
-	int height = _game.getRows();
+    _gameInterface = _interfaceFactory.createGameInterface(gameType, width,
+        height);
+    _gameInterface.setGame(_game);
+  }
 
-	_gameInterface = _interfaceFactory.createGameInterface(gameType, width,
-		height);
-	_gameInterface.setGame(_game);
-    }
-
-    public void terminateGame() {
-	_gameInterface.terminateGame();
-    }
+  public void terminateGame() {
+    _gameInterface.terminateGame();
+  }
 }

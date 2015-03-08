@@ -35,16 +35,16 @@ import logic.player.Player;
 
 public class GravityFactory implements LogicFactory {
 
-    public Game createGame(int columns, int rows) {
-	return new GravityGame(columns, rows);
-    }
+  public Game createGame(int columns, int rows) {
+    return new GravityGame(columns, rows);
+  }
 
-    public Player createHumanPlayer(InterfaceFactory interfaceFactory) {
-	return interfaceFactory.createHumanPlayer(true);
-    }
+  public Player createHumanPlayer(InterfaceFactory interfaceFactory) {
+    return interfaceFactory.createHumanPlayer(true);
+  }
 
-    public Player createComputerPlayer(Token color) {
+  public Player createComputerPlayer(Token color) {
 
-	return new GravityComputerPlayer();
-    }
+    return new GravityComputerPlayer();
+  }
 }

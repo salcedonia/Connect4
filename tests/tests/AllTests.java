@@ -39,17 +39,17 @@ import logic.game.GravityGameTest;
 
 public class AllTests {
 
-    public static Test suite() {
+  public static Test suite() {
 
-	TestSuite suite = new TestSuite("Connect4 tests");
-	suite.addTestSuite(TokenTest.class);
-	suite.addTestSuite(ConnectFourGameTest.class);
-	suite.addTestSuite(PopOutGameTest.class);
-	suite.addTestSuite(GravityGameTest.class);
-	suite.addTestSuite(ConnectFourTokenMoveTest.class);
-	suite.addTestSuite(PopOutTokenMoveTest.class);
-	suite.addTestSuite(GravityTokenMoveTest.class);
-	suite.addTestSuite(BoardTest.class);
-	return suite;
-    }
+    TestSuite suite = new TestSuite("Connect4 tests");
+    suite.addTestSuite(TokenTest.class);
+    suite.addTestSuite(ConnectFourGameTest.class);
+    suite.addTestSuite(PopOutGameTest.class);
+    suite.addTestSuite(GravityGameTest.class);
+    suite.addTestSuite(ConnectFourTokenMoveTest.class);
+    suite.addTestSuite(PopOutTokenMoveTest.class);
+    suite.addTestSuite(GravityTokenMoveTest.class);
+    suite.addTestSuite(BoardTest.class);
+    return suite;
+  }
 }

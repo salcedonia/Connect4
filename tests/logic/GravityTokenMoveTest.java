@@ -35,156 +35,138 @@ import logic.strategy.GravityTokenMove;
 
 public class GravityTokenMoveTest extends TestCase {
 
-    public void testPutTokenInCentralSlot() {
-	String tabComp[] = { "     ", "     ", "     ", "     ", "     " };
+  public void testPutTokenInCentralSlot() {
+    String tabComp[] = { "     ", "     ", "     ", "     ", "     " };
 
-	Board tComp = BoardUtils.buildBoard(tabComp, 5, 5,
-		new GravityTokenMove());
+    Board tComp = BoardUtils.buildBoard(tabComp, 5, 5, new GravityTokenMove());
 
-	assertTrue("Fails tokens", tComp.getTokens() == 0);
-	assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
+    assertTrue("Fails tokens", tComp.getTokens() == 0);
+    assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
 
-	try {
+    try {
 
-	    tComp.putToken(Token.RED, 2, 2);
+      tComp.putToken(Token.RED, 2, 2);
 
-	    assertTrue("Fails tokens", tComp.getTokens() == 1);
-	    assertTrue("Fails tokens in column",
-		    tComp.getTokensInColumn(2) == 1);
+      assertTrue("Fails tokens", tComp.getTokens() == 1);
+      assertTrue("Fails tokens in column", tComp.getTokensInColumn(2) == 1);
 
-	} catch (InvalidMove e) {
+    } catch (InvalidMove e) {
 
-	    fail("Fails upon invalid move");
-	}
-
-	String tabRes[] = { "     ", "     ", "  R  ", "     ", "     " };
-
-	Board tRes = BoardUtils
-		.buildBoard(tabRes, 5, 5, new GravityTokenMove());
-
-	assertEquals("Fails when putting token in central slot", tComp, tRes);
+      fail("Fails upon invalid move");
     }
 
-    public void testPutTokenSimpleCase() {
-	String tabComp[] = { "     ", "     ", "     ", "     ", "     " };
+    String tabRes[] = { "     ", "     ", "  R  ", "     ", "     " };
 
-	Board tComp = BoardUtils.buildBoard(tabComp, 5, 5,
-		new GravityTokenMove());
+    Board tRes = BoardUtils.buildBoard(tabRes, 5, 5, new GravityTokenMove());
 
-	assertTrue("Fails tokens", tComp.getTokens() == 0);
-	assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
+    assertEquals("Fails when putting token in central slot", tComp, tRes);
+  }
 
-	try {
+  public void testPutTokenSimpleCase() {
+    String tabComp[] = { "     ", "     ", "     ", "     ", "     " };
 
-	    tComp.putToken(Token.RED, 2, 1);
+    Board tComp = BoardUtils.buildBoard(tabComp, 5, 5, new GravityTokenMove());
 
-	    assertTrue("Fails tokens", tComp.getTokens() == 1);
-	    assertTrue("Fails tokens in column",
-		    tComp.getTokensInColumn(2) == 1);
+    assertTrue("Fails tokens", tComp.getTokens() == 0);
+    assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
 
-	} catch (InvalidMove e) {
+    try {
 
-	    fail("Fails upon invalid move");
-	}
+      tComp.putToken(Token.RED, 2, 1);
 
-	String tabRes[] = { "  R  ", "     ", "     ", "     ", "     " };
+      assertTrue("Fails tokens", tComp.getTokens() == 1);
+      assertTrue("Fails tokens in column", tComp.getTokensInColumn(2) == 1);
 
-	Board tRes = BoardUtils
-		.buildBoard(tabRes, 5, 5, new GravityTokenMove());
-	assertEquals("Fails when putting token in simple case", tComp, tRes);
+    } catch (InvalidMove e) {
+
+      fail("Fails upon invalid move");
     }
 
-    public void testPutTokenDoubleCase() {
-	String tabComp[] = { "     ", "     ", "     ", "     ", "     " };
+    String tabRes[] = { "  R  ", "     ", "     ", "     ", "     " };
 
-	Board tComp = BoardUtils.buildBoard(tabComp, 5, 5,
-		new GravityTokenMove());
+    Board tRes = BoardUtils.buildBoard(tabRes, 5, 5, new GravityTokenMove());
+    assertEquals("Fails when putting token in simple case", tComp, tRes);
+  }
 
-	assertTrue("Fails tokens", tComp.getTokens() == 0);
-	assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
+  public void testPutTokenDoubleCase() {
+    String tabComp[] = { "     ", "     ", "     ", "     ", "     " };
 
-	try {
+    Board tComp = BoardUtils.buildBoard(tabComp, 5, 5, new GravityTokenMove());
 
-	    tComp.putToken(Token.RED, 1, 1);
+    assertTrue("Fails tokens", tComp.getTokens() == 0);
+    assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
 
-	    assertTrue("Fails tokens", tComp.getTokens() == 1);
-	    assertTrue("Fails tokens in column",
-		    tComp.getTokensInColumn(1) == 0);
+    try {
 
-	} catch (InvalidMove e) {
+      tComp.putToken(Token.RED, 1, 1);
 
-	    fail("Fails upon invalid move");
-	}
+      assertTrue("Fails tokens", tComp.getTokens() == 1);
+      assertTrue("Fails tokens in column", tComp.getTokensInColumn(1) == 0);
 
-	String tabRes[] = { "R    ", "     ", "     ", "     ", "     " };
+    } catch (InvalidMove e) {
 
-	Board tRes = BoardUtils
-		.buildBoard(tabRes, 5, 5, new GravityTokenMove());
-
-	assertEquals("Fails when putting token attracted by two sides", tComp,
-		tRes);
+      fail("Fails upon invalid move");
     }
 
-    public void testPutTokenTripleCase1() {
-	String tabComp[] = { "     ", "     ", "     ", "     ", "     ",
-		"     " };
+    String tabRes[] = { "R    ", "     ", "     ", "     ", "     " };
 
-	Board tComp = BoardUtils.buildBoard(tabComp, 5, 6,
-		new GravityTokenMove());
+    Board tRes = BoardUtils.buildBoard(tabRes, 5, 5, new GravityTokenMove());
 
-	assertTrue("Fails tokens", tComp.getTokens() == 0);
-	assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
+    assertEquals("Fails when putting token attracted by two sides", tComp, tRes);
+  }
 
-	try {
+  public void testPutTokenTripleCase1() {
+    String tabComp[] = { "     ", "     ", "     ", "     ", "     ", "     " };
 
-	    tComp.putToken(Token.RED, 2, 2);
+    Board tComp = BoardUtils.buildBoard(tabComp, 5, 6, new GravityTokenMove());
 
-	    assertTrue("Fails tokens", tComp.getTokens() == 1);
-	    assertTrue("Fails tokens in column",
-		    tComp.getTokensInColumn(2) == 1);
+    assertTrue("Fails tokens", tComp.getTokens() == 0);
+    assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
 
-	} catch (InvalidMove e) {
+    try {
 
-	    fail("Fails upon invalid move");
-	}
+      tComp.putToken(Token.RED, 2, 2);
 
-	String tabRes[] = { "  R  ", "     ", "     ", "     ", "     ",
-		"     " };
+      assertTrue("Fails tokens", tComp.getTokens() == 1);
+      assertTrue("Fails tokens in column", tComp.getTokensInColumn(2) == 1);
 
-	Board tRes = BoardUtils
-		.buildBoard(tabRes, 5, 6, new GravityTokenMove());
+    } catch (InvalidMove e) {
 
-	assertEquals("Fails when putting token attracted by three sides",
-		tComp, tRes);
+      fail("Fails upon invalid move");
     }
 
-    public void testPutTokenTripleCase2() {
-	String tabComp[] = { "      ", "      ", "      ", "      ", "      " };
+    String tabRes[] = { "  R  ", "     ", "     ", "     ", "     ", "     " };
 
-	Board tComp = BoardUtils.buildBoard(tabComp, 6, 5,
-		new GravityTokenMove());
+    Board tRes = BoardUtils.buildBoard(tabRes, 5, 6, new GravityTokenMove());
 
-	assertTrue("Fails tokens", tComp.getTokens() == 0);
-	assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
+    assertEquals("Fails when putting token attracted by three sides", tComp,
+        tRes);
+  }
 
-	try {
+  public void testPutTokenTripleCase2() {
+    String tabComp[] = { "      ", "      ", "      ", "      ", "      " };
 
-	    tComp.putToken(Token.RED, 2, 2);
+    Board tComp = BoardUtils.buildBoard(tabComp, 6, 5, new GravityTokenMove());
 
-	    assertTrue("Fails tokens", tComp.getTokens() == 1);
-	    assertTrue("Fails tokens in column",
-		    tComp.getTokensInColumn(0) == 1);
+    assertTrue("Fails tokens", tComp.getTokens() == 0);
+    assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 0);
 
-	} catch (InvalidMove e) {
-	    fail("Fails upon invalid move");
-	}
+    try {
 
-	String tabRes[] = { "      ", "      ", "R     ", "      ", "      " };
+      tComp.putToken(Token.RED, 2, 2);
 
-	Board tRes = BoardUtils
-		.buildBoard(tabRes, 6, 5, new GravityTokenMove());
+      assertTrue("Fails tokens", tComp.getTokens() == 1);
+      assertTrue("Fails tokens in column", tComp.getTokensInColumn(0) == 1);
 
-	assertEquals("Fails when putting token attracted by three sides",
-		tComp, tRes);
+    } catch (InvalidMove e) {
+      fail("Fails upon invalid move");
     }
+
+    String tabRes[] = { "      ", "      ", "R     ", "      ", "      " };
+
+    Board tRes = BoardUtils.buildBoard(tabRes, 6, 5, new GravityTokenMove());
+
+    assertEquals("Fails when putting token attracted by three sides", tComp,
+        tRes);
+  }
 }

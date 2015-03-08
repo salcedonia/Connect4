@@ -33,12 +33,12 @@ import logic.Token;
 
 public class PopOutComputerPlayer extends ComputerPlayer {
 
-    public Position getMove(Token[][] board) {
-	Random random = new Random();
-	try {
-	    Thread.sleep(1000);
-	} catch (InterruptedException e) {
-	}
-	return new Position((int) (random.nextDouble() * board.length), 0);
+  public Position getMove(Token[][] board) {
+    Random random = new Random();
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
     }
+    return new Position((int) (random.nextDouble() * board.length), 0);
+  }
 }

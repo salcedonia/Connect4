@@ -35,68 +35,66 @@ import gui.swing.SplashScreen;
 
 public class Main {
 
-    static CommandLineParser _commandLineParser;
+  static CommandLineParser _commandLineParser;
 
-    public static void main(String[] args) {
-	_commandLineParser = new CommandLineParser(args);
-	if (_commandLineParser.areParametersValid()) {
-	    if (_commandLineParser.isConsole()) {
-		runConsole();
-	    } else if (_commandLineParser.isGui()) {
-		runGUI();
-	    }
-	}
+  public static void main(String[] args) {
+    _commandLineParser = new CommandLineParser(args);
+    if (_commandLineParser.areParametersValid()) {
+      if (_commandLineParser.isConsole()) {
+        runConsole();
+      } else if (_commandLineParser.isGui()) {
+        runGUI();
+      }
     }
+  }
 
-    public static void runConsole() {
-	Application app = new Application();
-	if (app.init(_commandLineParser.getGameType(),
-		_commandLineParser.getGameMode(),
-		_commandLineParser.getRedPlayer(),
-		_commandLineParser.getYellowPlayer(),
-		_commandLineParser.getWidth(), _commandLineParser.getHeight())) {
-	    app.run();
-	}
+  public static void runConsole() {
+    Application app = new Application();
+    if (app.init(_commandLineParser.getGameType(),
+        _commandLineParser.getGameMode(), _commandLineParser.getRedPlayer(),
+        _commandLineParser.getYellowPlayer(), _commandLineParser.getWidth(),
+        _commandLineParser.getHeight())) {
+      app.run();
     }
+  }
 
-    public static void runGUI() {
-	setLookAndFeel();
+  public static void runGUI() {
+    setLookAndFeel();
 
-	SplashScreen splash = new SplashScreen(5000);
-	splash.showSplash();
+    SplashScreen splash = new SplashScreen(5000);
+    splash.showSplash();
 
-	javax.swing.SwingUtilities.invokeLater(new Runnable() {
-	    public void run() {
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
 
-		// Shows the window for configuring a game
-		ConfigureGameWindow optionsWindow = new ConfigureGameWindow(
-			null, true, null);
-		optionsWindow.showWindow();
-	    }
-	});
+        // Shows the window for configuring a game
+        ConfigureGameWindow optionsWindow = new ConfigureGameWindow(null, true,
+            null);
+        optionsWindow.showWindow();
+      }
+    });
+  }
+
+  private static void setLookAndFeel() {
+    try {
+      for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(info.getName())) {
+          UIManager.setLookAndFeel(info.getClassName());
+          break;
+        }
+      }
+    } catch (Exception e) {
+      try {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      } catch (ClassNotFoundException e1) {
+        e1.printStackTrace();
+      } catch (InstantiationException e1) {
+        e1.printStackTrace();
+      } catch (IllegalAccessException e1) {
+        e1.printStackTrace();
+      } catch (UnsupportedLookAndFeelException e1) {
+        e1.printStackTrace();
+      }
     }
-
-    private static void setLookAndFeel() {
-	try {
-	    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		if ("Nimbus".equals(info.getName())) {
-		    UIManager.setLookAndFeel(info.getClassName());
-		    break;
-		}
-	    }
-	} catch (Exception e) {
-	    try {
-		UIManager.setLookAndFeel(UIManager
-			.getSystemLookAndFeelClassName());
-	    } catch (ClassNotFoundException e1) {
-		e1.printStackTrace();
-	    } catch (InstantiationException e1) {
-		e1.printStackTrace();
-	    } catch (IllegalAccessException e1) {
-		e1.printStackTrace();
-	    } catch (UnsupportedLookAndFeelException e1) {
-		e1.printStackTrace();
-	    }
-	}
-    }
+  }
 }

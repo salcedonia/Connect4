@@ -28,18 +28,18 @@ package application;
 
 public enum GameType {
 
-    CONNECT4, POP_OUT, GRAVITY;
+  CONNECT4, POP_OUT, GRAVITY;
 
-    public String toString() {
-	if (this == CONNECT4) {
-	    return "Connect4";
-	}
-	if (this == POP_OUT) {
-	    return "Pop Out";
-	}
-	if (this == GRAVITY) {
-	    return "Gravity";
-	}
-	return "";
+  public String toString() {
+    if (this == CONNECT4) {
+      return "Connect4";
     }
+    if (this == POP_OUT) {
+      return "Pop Out";
+    }
+    if (this == GRAVITY) {
+      return "Gravity";
+    }
+    return "";
+  }
 }

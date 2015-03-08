@@ -38,52 +38,51 @@ import logic.AskPlayAgain;
 
 public class GUIPlayAgain implements AskPlayAgain {
 
-    private static final String RESOURCES_PATH = "/gui/swing/img/";
-    private static final String HEADER_IMAGE = "miniConnect4.png";
-    private static final String ACCEPT_IMAGE = "accept.png";
-    private static final String CLOSE_IMAGE = "close.png";
+  private static final String RESOURCES_PATH = "/gui/swing/img/";
+  private static final String HEADER_IMAGE = "miniConnect4.png";
+  private static final String ACCEPT_IMAGE = "accept.png";
+  private static final String CLOSE_IMAGE = "close.png";
 
-    public boolean playAgain() {
-	Icon greenIcon = null;
-	try {
-	    greenIcon = new ImageIcon(ImageIO.read(this.getClass().getResource(
-		    RESOURCES_PATH + ACCEPT_IMAGE)));
-	} catch (IOException e1) {
-	    e1.printStackTrace();
-	}
-	Icon redIcon = null;
-	try {
-	    redIcon = new ImageIcon(ImageIO.read(this.getClass().getResource(
-		    RESOURCES_PATH + CLOSE_IMAGE)));
-	} catch (IOException e1) {
-	    e1.printStackTrace();
-	}
-	Object iconArray[] = { greenIcon, redIcon };
-
-	int userOption = 0;
-	try {
-	    userOption = JOptionPane.showOptionDialog(
-		    null,
-		    "Do you want to play again?",
-		    "Game Over",
-		    JOptionPane.YES_NO_OPTION,
-		    JOptionPane.QUESTION_MESSAGE,
-		    new ImageIcon(ImageIO.read(this.getClass().getResource(
-			    RESOURCES_PATH + HEADER_IMAGE))), iconArray,
-		    iconArray[1]);
-	} catch (HeadlessException e) {
-	    e.printStackTrace();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-
-	if (userOption == 0) {
-	    return true;
-	} else {
-	    if (userOption == 1) {
-		System.exit(0);
-	    }
-	}
-	return false;
+  public boolean playAgain() {
+    Icon greenIcon = null;
+    try {
+      greenIcon = new ImageIcon(ImageIO.read(this.getClass().getResource(
+          RESOURCES_PATH + ACCEPT_IMAGE)));
+    } catch (IOException e1) {
+      e1.printStackTrace();
     }
+    Icon redIcon = null;
+    try {
+      redIcon = new ImageIcon(ImageIO.read(this.getClass().getResource(
+          RESOURCES_PATH + CLOSE_IMAGE)));
+    } catch (IOException e1) {
+      e1.printStackTrace();
+    }
+    Object iconArray[] = { greenIcon, redIcon };
+
+    int userOption = 0;
+    try {
+      userOption = JOptionPane.showOptionDialog(
+          null,
+          "Do you want to play again?",
+          "Game Over",
+          JOptionPane.YES_NO_OPTION,
+          JOptionPane.QUESTION_MESSAGE,
+          new ImageIcon(ImageIO.read(this.getClass().getResource(
+              RESOURCES_PATH + HEADER_IMAGE))), iconArray, iconArray[1]);
+    } catch (HeadlessException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    if (userOption == 0) {
+      return true;
+    } else {
+      if (userOption == 1) {
+        System.exit(0);
+      }
+    }
+    return false;
+  }
 }
