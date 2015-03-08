@@ -1,6 +1,6 @@
 ## Synopsis
 
-A classic Connect4 game developed in Java under GPL3 license.
+A classic Connect4 game developed in **Java** under **GPL3** license.
 
 There are three different game modes:
 * **Connect4:** the classic game in which players playing in alternate turns try to connect 4 tokens of their color either horizontally, vertically or diagonally in a board of 7 columns and 6 rows.
@@ -23,18 +23,10 @@ After a long time, I've decided finally to take it out from the burden of memori
 
 ## Installation
 
-Once you have cloned the repository, run in a terminal the following command:
-
-```
-java -jar connect4.jar
-```
+Once you have cloned the repository, it is up to you how to run the application. You can compile the code and generate a .jar file and run the application from there or, eventually use an IDE as Eclipse or Netbeans. Your call.
 
 By default, a new Connect4 swing game with both players as Human is created.
-Nonetheless, you can configure your own game options via console:
-
-```
-java -jar connect4.jar (-i|--interface) console
-```
+Nonetheless, you can configure your own game options via console by passing the following parameter to the program:  (-i|--interface) console
 
 The following options are available:
 * **(-g|--game)** selects the game type:
@@ -50,6 +42,6 @@ These dimensions are **10x10** by default for a gravity game.
 
 Usual business. Just simply make sure that **JUnit.jar** is in your classpath, then invoke the command line runner from the console as follows:
 ```
-java -cp bin:junit-4.4.jar org.junit.runner.JUnitCore tests.AllTests
+java -cp bin:lib/junit-4.4.jar org.junit.runner.JUnitCore tests.AllTests
 ```
 
