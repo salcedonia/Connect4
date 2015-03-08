@@ -11,7 +11,7 @@ Players can be either **human** or **computer** and it can be played in both **g
 
 ## History
 
-This game is centuries old, Captain James Cook used to play it with his fellow officers on his long voyages, and so it has also been called "Captain's Mistress". Milton Bradley (now owned by Hasbro) published a version of this game called "Connect Four" in 1974.
+This game is centuries old, Captain James Cook used to play it with his fellow officers on his long voyages, and so it has also been called *"Captain's Mistress"*. Milton Bradley (now owned by Hasbro) published a version of this game called *"Connect Four"* in 1974.
 
 Other names for this this game are "Four-in-a-Row" and "Plot Four".
 
@@ -23,9 +23,9 @@ After a long time, I've decided finally to take it out from the burden of memori
 
 ## Installation
 
-Once you have cloned the repository, it is up to you how to run the application. You can compile the code and generate a .jar file and run the application from there or, eventually use an IDE as Eclipse or Netbeans. Your call.
+Once you have cloned the repository, it is up to you how to run the application. Compile the code, generate a .jar file or run directly the **Main** class. Alternatively, you could make use of an IDE as Eclipse or Netbeans for editing, compiling and running the code more easily.
 
-By default, a new Connect4 swing game with both players as Human is created.
+By default, a new *connect4* game with both players as *human* with the *graphic* interface is created.
 Nonetheless, you can configure your own game options via console by passing the following parameter to the program:  (-i|--interface) console
 
 The following options are available:
@@ -33,14 +33,15 @@ The following options are available:
   * connect4
   * popout
   * gravity
-Exceptionally, in case of gravity game, users can specify the dimensions of the board
+
+Exceptionally, for *gravity* games, the dimensions of the board can be specified:
 * **(-w|width)**
 * **(-r|rows)**
 These dimensions are **10x10** by default for a gravity game.
 
 ## Tests
 
-Usual business. Just simply make sure that **JUnit.jar** is in your classpath, then invoke the command line runner from the console as follows:
+Just simply invoke the command line runner from the console as follows:
 ```
 java -cp bin:lib/junit-4.4.jar org.junit.runner.JUnitCore tests.AllTests
 ```
